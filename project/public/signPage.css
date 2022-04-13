@@ -18,6 +18,7 @@
     font-size: 5.5vw;
     text-align: center;
     margin-top: 0;
+    margin-bottom: 5%;
 }
 
 .sign-form {
@@ -70,6 +71,12 @@ label[for=":"] {
     border-radius: 10vw;
     padding: .5% 3% .5% 3%;
     cursor: pointer;
+}
+
+.feedback-sign {
+    text-align: center;
+    font-size: 2vw;
+    /* background-color: aliceblue; */
 }
 
 .sign-footer {
