@@ -6,16 +6,20 @@ const ref = firebase.database().ref("userlist");
 
 function addList(event) {
     event.preventDefault();
-    let title = document.getElementById("user").value;
-    let password = document.getElementById("password").value;
+    // let title = document.getElementById("user").value;
+    // let password = document.getElementById("password").value;
+    // oom add
+    let title = document.getElementById("input-email-signup").value;
+    let password = document.getElementById("input-password-signup").value;
+    // end
     const currentUser = firebase.auth().currentUser;
     ref.child(currentUser.uid).push({
         title: title,
         password: password,
     })
     console.log("Add list complete");
-    document.getElementById("user").value = "";
-    document.getElementById("password").value = "";
+    title = "";
+    password = "";
 }
 
 function ReadList(snapshot) {

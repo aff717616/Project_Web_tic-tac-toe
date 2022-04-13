@@ -127,19 +127,19 @@
             <form action="" id="signUp-form" class="sign-form">
                 <label for="signUp-username" class="sign-label">Username</label>
                 <label for=":">:</label>
-                <input type="text" name="username" id="signUp-username" class="sign-input">
+                <input type="text" name="username" id="signUp-username" class="sign-input" aria-label="title" aria-describedby="basic-addon1" required>
 
                 <label for="signUp-email" class="sign-label">Email</label>
                 <label for=":">:</label>
-                <input type="email" name="email" id="signUp-email" class="sign-input">
+                <input type="email" name="email" id="input-email-signup" class="sign-input" aria-label="title" aria-describedby="basic-addon1" required>
 
                 <label for="signUp-password" class="sign-label">Password</label>
                 <label for=":">:</label>
-                <input type="password" name="password" id="signUp-password" class="sign-input">
+                <input type="password" name="password" id="input-password-signup" class="sign-input" aria-label="title" aria-describedby="basic-addon1" required>
 
                 <label for="signUp-confirmPassword" class="sign-label">Confirm Password</label>
                 <label for=":">:</label>
-                <input type="password" name="confirmPassword" id="signUp-confirmPassword" class="sign-input">
+                <input type="password" name="confirmPassword" id="signUp-confirmPassword" class="sign-input" aria-label="title" aria-describedby="basic-addon1" required>
 
                 <!-- <input type="submit" value="Sign Up" id="signUp-submit" class="sign-submit" onclick="goToMenuPage()"> -->
                 <button type="submit" class="sign-submit">Sign Up</button>
@@ -161,11 +161,11 @@
         <div id="menu-all">
             <div id="menu-random" class="menu">
                 <p>Random player</p>
-                <i class="go-icon fa-solid fa-caret-left" onclick="goToSignInPage()"></i>
+                <i class="go-icon fa-solid fa-caret-left"></i>
             </div>
             <div id="menu-create" class="menu">
                 <p>Create Room</p>
-                <i class="go-icon fa-solid fa-caret-left" onclick="goToSignInPage()"></i>
+                <i class="go-icon fa-solid fa-caret-left"></i>
             </div>
             <div id="menu-join" class="menu">
                 <p>Join Room</p>

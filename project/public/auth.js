@@ -35,6 +35,7 @@ btnLogout.addEventListener('click', () => {
     firebase.auth().signOut();
     console.log('logout complete');
     //oom add
+    resetSignInput()
     goToSignInPage()
         //end
 })
@@ -79,9 +80,13 @@ function loginUser(event) {
 }
 const btnCancel = document.querySelectorAll('.btn-cancel').forEach(btn => {
     btn.addEventListener('click', () => {
-        signupForm.reset();
-        signupFeedback.innerHTML = ``;
-        loginForm.reset();
-        loginFeedback.innerHTML = ``;
+        resetSignInput()
     })
 })
+
+function resetSignInput() {
+    signupForm.reset();
+    signupFeedback.innerHTML = ``;
+    loginForm.reset();
+    loginFeedback.innerHTML = ``;
+}
