@@ -1,317 +1,154 @@
-const ref = firebase.database().ref("Game");
-const refScore = firebase.database().ref("Scores")
+let board = document.querySelector(".board")
+let player = document.querySelector(".player")
+let playAgain = document.querySelector(".playAgain")
+let restart = document.querySelector(".restart")
+let winner = document.getElementById("currentPlayer_status")
+let box = 0
+let winningArray = [
+    [0, 1, 2],
+    [5, 6, 7],
+    [10, 11, 12],
+    [15, 16, 17],
+    [20, 21, 22],
+    [4, 3, 2],
+    [9, 8, 7],
+    [14, 13, 12],
+    [19, 18, 17],
+    [24, 23, 22],
+    [1, 2, 3],
+    [6, 7, 8],
+    [11, 12, 13],
+    [16, 17, 18],
+    [21, 22, 23],
+    [0, 5, 10],
+    [1, 6, 11],
+    [2, 7, 12],
+    [3, 8, 13],
+    [4, 9, 14],
+    [20, 15, 10],
+    [21, 16, 11],
+    [22, 17, 12],
+    [23, 18, 13],
+    [24, 19, 14],
+    [5, 10, 15],
+    [6, 11, 16],
+    [7, 12, 17],
+    [8, 13, 18],
+    [9, 14, 19],
+    [2, 6, 10],
+    [8, 12, 16],
+    [14, 18, 22],
+    [22, 16, 10],
+    [18, 12, 6],
+    [14, 8, 2],
+    [1, 7, 13],
+    [19, 13, 7],
+    [5, 11, 17],
+    [3, 7, 11],
+    [23, 17, 11],
+    [15, 11, 17],
+    [21, 17, 13],
+    [9, 13, 17]
+];
+let currentPlayer = 1
+document.addEventListener("DOMContentLoaded", loadDOM)
+    //load dom function
 
-// refScore.on("value", snapshot => {
-//     data = snapshot.val()
-//     const currentUser = firebase.auth().currentUser
+function loadDOM() {
+    createBoard()
+    player.innerHTML = currentPlayer
+    playAgain.addEventListener("click", reset)
+    let squares = document.querySelectorAll(".board div")
+    Array.from(squares).forEach(square => {
+        square.addEventListener("click", clickBox)
 
-//     console.log(currentUser.email);
-//     console.log(currentUser);
-//     if (currentUser){
-//         if (data[currentUser.uid]){
-//             document.getElementById("scoreplayer").innerHTML = `(${data[currentUser.uid]})`
-//         }
-//         else{
-//             document.getElementById("scoreplayer").innerHTML = "(0)"
-//         }
-//     }
-// })
-let turn = 1;
-const btnJoins = document.querySelectorAll(".btn-join");
-btnJoins.forEach((btnJoin) => btnJoin.addEventListener("click", joinGame));
-
-
-function playgame(event) {
-    console.log('hello');
+    })
 }
-//JOIN GAME IN BUTTON//
-function joinGame(event) {
-    const currentUser = firebase.auth().currentUser;
-    console.log("[Join] Current user:", currentUser);
-    if (currentUser) {
-        const btnJoinID = event.currentTarget.getAttribute("id");
-        const player = btnJoinID[btnJoinID.length - 1];
+// createBoard function
 
-        const playerForm = document.getElementById(`inputPlayer-${player}`);
-        if (playerForm.value == "") {
-            let tmpID = `user-${player}-id`;
-            let tmpEmail = `user-${player}-email`;
-            ref.child("game-1").update({
-                [tmpID]: currentUser.uid,
-                [tmpEmail]: currentUser.email,
-            });
-            console.log(currentUser.email + " added.");
-            event.currentTarget.disabled = true;
+function createBoard() {
+
+    winner.innerHTML = `The current player is`
+    for (let i = 0; i < 30; i++) {
+        let div = document.createElement("div")
+        div.setAttribute("data-id", i)
+        div.className = "square"
+        if (i >= 25) {
+            div.className = "taken"
         }
+        board.appendChild(div)
     }
 }
+//clickBoard function
+let counttie = 0;
 
-// const logo = document.querySelectorAll('.');
-const logoutItems = document.querySelectorAll('.logged-out');
-const loginItems = document.querySelectorAll('.logged-in');
-// const container1 = document.querySelectorAll('.content-1');
-function setupUI(user) {
-    if (user) {
-        document.getElementById("user-profile-name").innerHTML = user.email;
-        loginItems.forEach(item => item.style.display = 'inline-block');
-        logoutItems.forEach(item => item.style.display = 'none');
-        // container1.forEach(item => item.style.display = 'flex');
+function clickBox() {
+    let squares = document.querySelectorAll(".board div")
+    let click = parseInt(this.dataset.id)
+    if (squares[click + 5].classList.contains("taken") && !squares[click].classList.contains("taken")) {
+        if (currentPlayer === 1) {
+            currentPlayer = 2
+            this.className = "player-one taken"
+            counttie++;
+            player.innerHTML = currentPlayer
+            checkWon()
+
+            console.log(player)
+        } else if (currentPlayer === 2) {
+            currentPlayer = 1
+            this.className = "player-two taken"
+            counttie++;
+            player.innerHTML = currentPlayer
+            checkWon()
+            console.log(player)
+        }
+        if (box === 20) {
+            setTimeout(() => alert("boxes filled"), 300)
+            setTimeout(() => restart.style.display = "flex", 500)
+        }
     } else {
-        loginItems.forEach(item => item.style.display = 'none');
-        logoutItems.forEach(item => item.style.display = 'inline-block');
-        // container1.forEach(item => item.style.display = 'none');
+        alert("กรุณาหยอดช่องที่ล่างสุดของแถวที่ว่างอยู่")
     }
 }
+//the checkWon function
+function checkWon() {
+    let squares = document.querySelectorAll(".board div")
 
-ref.on("value", (snapshot) => {
-    getGameInfo(snapshot);
-});
-const btnstart = document.getElementById("btnStartGame");
-const btnstop = document.getElementById("btnTerminateGame");
-//btnstop.disabled = true;//
-// btnstart.addEventListener("click", startgame);
-// btnstop.addEventListener("click", stopgame);
-const btn11 = document.getElementById("row-1-col-1");
-const btn12 = document.getElementById("row-1-col-2");
-const btn13 = document.getElementById("row-1-col-3");
-const btn21 = document.getElementById("row-2-col-1");
-const btn22 = document.getElementById("row-2-col-2");
-const btn23 = document.getElementById("row-2-col-3");
-const btn31 = document.getElementById("row-3-col-1");
-const btn32 = document.getElementById("row-3-col-2");
-const btn33 = document.getElementById("row-3-col-3");
-let isstart = 0;
-/*btn11.addEventListener("click", ()=>{
-    if(isstart == 1){
-        console.log('row-1-col-1');
-        console.log(btn11.innerHTML);
-        if (document.innerHTML ==""){
-            document.getElementById('row-1-col-1').innerHTML = '0';
-            turn++;
-        }else if(btn11.innerHTML =="" && turn%2==0){
-            document.getElementById('row-1-col-1').innerHTML = 'x';
-            turn++;
-        }else{
-            console.log('avavava');
+    for (let y = 0; y < winningArray.length; y++) {
+
+        let square = winningArray[y]
+        if (square.every(q => squares[q].classList.contains("player-one"))) {
+            counttie = 0;
+            player.innerHTML = 1
+                // setTimeout(() => alert("player one(red) wins "), 200)
+            setTimeout(() => restart.style.display = "flex", 500)
+            winner.innerHTML = `THE WINNER IS PLAYER `
+            currentPlayer = 1
+            break
+        } else if (square.every(q => squares[q].classList.contains("player-two"))) {
+            counttie = 0;
+            player.innerHTML = 2
+                // setTimeout(() => alert("player two(yellow) wins"), 200)
+            setTimeout(() => restart.style.display = "flex", 500)
+            winner.innerHTML = 'THE WINNER IS PLAYER '
+            currentPlayer = 1
+
+        } else if (counttie == 25) {
+            counttie = 0;
+            player.innerHTML = ''
+            winner.innerHTML = 'GAME DRAW '
+            setTimeout(() => restart.style.display = "flex", 500)
+            currentPlayer = 1
+            break
+
         }
-        
     }
-})*/
-function startgame(event) {
-    ref.child("game-1").update({
-        status: "start",
-        turn: "X",
-        tables: ""
-    })
+
 }
 
-function stopgame(event) {
-    ref.child("game-1").child("status").remove()
-    ref.child("game-1").child("turn").remove()
-    ref.child("game-1").child("tables").remove()
-    ref.child("game-1").child("winner").remove()
-}
+function reset() {
 
-function getGameInfo(snapshot) {
-    document.getElementById("inputPlayer-x").value = "";
-    document.getElementById("inputPlayer-o").value = "";
-
-    document.querySelector('#btnJoin-x').disabled = false;
-    document.querySelector('#btnJoin-o').disabled = false;
-
-    document.querySelector("#status-text").innerHTML = "Waiting for players..."
-
-    snapshot.forEach((data) => {
-        const gameInfos = data.val();
-        console.log(gameInfos);
-        Object.keys(gameInfos).forEach((key) => {
-            switch (key) {
-                case "user-x-email":
-                    playerx = gameInfos[key];
-                    document.getElementById("inputPlayer-x").value = gameInfos[key];
-                    document.querySelector("#btnJoin-x").disabled = true;
-
-                    break;
-                case "user-o-email":
-                    playero = gameInfos[key];
-                    document.getElementById("inputPlayer-o").value = gameInfos[key];
-                    document.querySelector("#btnJoin-o").disabled = true;
-                    gameInfos[key];
-                    break;
-            }
-        });
-
-        if (document.getElementById("inputPlayer-x").value != "" && document.getElementById("inputPlayer-o").value != "") {
-            btnstart.disabled = false;
-            document.querySelector("#status-text").innerHTML = "Click START GAME"
-        } else {
-            btnstart.disabled = true;
-            document.querySelector("#status-text").innerHTML = "Waiting for players..."
-        }
-        if (gameInfos.status === "start") {
-
-            document.querySelector("#btnStartGame").disabled = true
-            document.querySelector("#btnCancel-x").disabled = true
-            document.querySelector("#btnCancel-o").disabled = true
-            const board = document.querySelectorAll(".table-col")
-            win()
-            board.forEach(gameinfo_board => { gameinfo_board.addEventListener("click", playgame) })
-        } else if (gameInfos.status === "finish") {
-            document.querySelector("#btnStartGame").disabled = true
-            document.querySelector("#btnCancel-x").disabled = true
-            document.querySelector("#btnCancel-o").disabled = true
-            const board = document.querySelectorAll(".table-col")
-            board.forEach(gameinfo_board => { gameinfo_board.removeEventListener("click", playgame) })
-        } else {
-            document.querySelector("#btnCancel-x").disabled = false
-            document.querySelector("#btnCancel-o").disabled = false
-            const board = document.querySelectorAll(".table-col")
-            board.forEach(gameinfo_board => { gameinfo_board.removeEventListener("click", playgame) })
-        }
-        if (gameInfos.turn) {
-            document.querySelector("#status-text").innerHTML = `Turn: ${gameInfos.turn}`
-        }
-
-        if (gameInfos.tables) {
-            for (const gameinfo_board in gameInfos.tables) {
-                document.querySelector(`#${gameinfo_board} p`).innerHTML = gameInfos.tables[gameinfo_board]
-            }
-        } else {
-            const board = document.querySelectorAll(".table-col p")
-            board.forEach(gameinfo_board => { gameinfo_board.innerHTML = "" })
-        }
-
-        if (gameInfos.winner == "draw") {
-            document.querySelector("#status-text").innerHTML = `GAME DRAW`
-        } else if (gameInfos.winner) {
-            document.querySelector("#status-text").innerHTML = `Winner: ${gameInfos.winner}`
-        }
-    });
-}
-
-
-const btnCancels = document.querySelectorAll(".btn-cancel-join-game");
-btnCancels.forEach((btnCancel) =>
-    btnCancel.addEventListener('click', canceljoin)
-);
-
-function canceljoin(event) {
-    const currentUser = firebase.auth().currentUser;
-    console.log("[Cancel] Current user:", currentUser);
-    if (currentUser) {
-        const btnCanceID = event.currentTarget.getAttribute("id");
-        const player = btnCanceID[btnCanceID.length - 1];
-        const playerForm = document.getElementById(`inputPlayer-${player}`);
-        if (playerForm.value && playerForm.value === currentUser.email) {
-            let tmpID = `user-${player}-id`;
-            let tmpEmail = `user-${player}-email`;
-            ref.child("game-1").child(tmpID).remove();
-            ref.child("game-1").child(tmpEmail).remove();
-            console.log(`delete on id: ${currentUser.uid}`);
-            document.querySelector(`#btnJoin-${player}`).disabled = false;
-        }
-
-    }
-}
-
-function playgame(event) {
-    ref.child("game-1").once("value", snapshot => {
-        data = snapshot.val()
-        currentUser = firebase.auth().currentUser
-        id = event.currentTarget.id
-        if (data.turn === "X" && data["user-x-email"] === currentUser.email && !data["tables"][id]) {
-            ref.child("game-1").child("tables").update({
-                [id]: data.turn
-            })
-            ref.child("game-1").update({
-                turn: "O"
-            })
-        } else if (data.turn === "O" && data["user-o-email"] === currentUser.email && !data["tables"][id]) {
-            ref.child("game-1").child("tables").update({
-                [id]: data.turn
-            })
-            ref.child("game-1").update({
-                turn: "X"
-            })
-        }
-    })
-}
-
-function win() {
-    ref.child("game-1").once("value", snapshot => {
-        data = snapshot.val()
-        currentUser = firebase.auth().currentUser
-        turns = ["X", "O"]
-
-        if (data.winner) {
-            return
-        }
-
-        for (const turn of turns) {
-            win1 = data["tables"]["row-1-col-1"] == turn && data["tables"]["row-1-col-2"] == turn && data["tables"]["row-1-col-3"] == turn
-            win2 = data["tables"]["row-2-col-1"] == turn && data["tables"]["row-2-col-2"] == turn && data["tables"]["row-2-col-3"] == turn
-            win3 = data["tables"]["row-3-col-1"] == turn && data["tables"]["row-3-col-2"] == turn && data["tables"]["row-3-col-3"] == turn
-            win4 = data["tables"]["row-1-col-1"] == turn && data["tables"]["row-2-col-1"] == turn && data["tables"]["row-3-col-1"] == turn
-            win5 = data["tables"]["row-1-col-2"] == turn && data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-2"] == turn
-            win6 = data["tables"]["row-1-col-3"] == turn && data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-3"] == turn
-            win7 = data["tables"]["row-1-col-1"] == turn && data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-3"] == turn
-            win8 = data["tables"]["row-1-col-3"] == turn && data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-1"] == turn
-
-            if (win1 || win2 || win3 || win4 || win5 || win6 || win7 || win8) {
-                ref.child("game-1").update({
-                    status: "finish",
-                    winner: turn
-                })
-                id = data[`user-${turn.toLowerCase()}-id`]
-                refScore.once("value", snapshot => {
-                    scores = snapshot.val()
-                    if (!scores || !scores[id]) {
-                        refScore.update({
-                            [id]: 3
-                        })
-                    } else {
-                        score = scores[id]
-                        refScore.update({
-                            [id]: parseInt(score) + 3
-                        })
-                    }
-                })
-
-                return
-            }
-
-            if (data["tables"]["row-1-col-1"] && data["tables"]["row-1-col-2"] && data["tables"]["row-1-col-3"] && data["tables"]["row-2-col-1"] && data["tables"]["row-2-col-2"] && data["tables"]["row-3-col-1"] && data["tables"]["row-3-col-2"] && data["tables"]["row-3-col-3"]) {
-                ref.child("game-1").update({
-                    status: "finish",
-                    winner: "draw"
-                })
-                id1 = data[`user-x-id`]
-                id2 = data[`user-o-id`]
-                refScore.once("value", snapshot => {
-                    scores = snapshot.val()
-                    if (!scores || !scores[id1]) {
-                        refScore.update({
-                            [id1]: 1
-                        })
-                    } else {
-                        score = scores[id1]
-                        refScore.update({
-                            [id1]: parseInt(score) + 1
-                        })
-                    }
-                    if (!scores || !scores[id2]) {
-                        refScore.update({
-                            [id2]: 1
-                        })
-                    } else {
-                        score = scores[id2]
-                        refScore.update({
-                            [id2]: parseInt(score) + 1
-                        })
-                    }
-                    return
-                })
-            }
-        }
-    })
+    board.innerHTML = ""
+    loadDOM()
+    restart.style.display = "none"
 }

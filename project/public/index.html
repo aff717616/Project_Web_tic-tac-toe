@@ -169,7 +169,18 @@
             </div>
             <div id="menu-join" class="menu">
                 <p>Join Room</p>
-                <i class="go-icon fa-solid fa-caret-left" onclick="location.href='playgame.html'"></i>
+                <i class="go-icon fa-solid fa-caret-left" onclick="goToGamePage()"></i>
+            </div>
+        </div>
+    </div>
+    <div id="game-page" class="container game">
+        <div class="currentPlayer">
+            <span id="currentPlayer_status">The current player is</span>
+            <span class="player"></span>
+            <div class="board"></div>
+            <div class="restart">
+                <button class="playAgain btn btn-danger">Play again</button>
+                <button class="playAgain btn btn-primary" onclick="goToMenuPage()">Exit to menu</a>
             </div>
         </div>
     </div>
@@ -191,6 +202,7 @@
 </script>
 <script type="text/javascript" src="pageToggle.js"></script>
 <script type="text/javascript" src="auth.js"></script>
+<script type="text/javascript" src="game.js"></script>
 <!-- <script type="text/javascript" src="game.js"></script> -->
 <!-- <script type="text/javascript" src="normal.js"></script> -->
 <script type="text/javascript" src="app.js"></script>
