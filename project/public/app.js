@@ -1,25 +1,30 @@
-const form = document.querySelector('#add-todo-form');
-form.addEventListener('submit' , addList);
+// const form = document.querySelector('#add-todo-form');
+const form = document.querySelector('#signUp-form');
+form.addEventListener('submit', addList);
 
 const ref = firebase.database().ref("userlist");
 
-function addList(event){
+function addList(event) {
     event.preventDefault();
-    let title = document.getElementById("user").value;
-    let password = document.getElementById("password").value;
+    // let title = document.getElementById("user").value;
+    // let password = document.getElementById("password").value;
+    // oom add
+    let title = document.getElementById("input-email-signup").value;
+    let password = document.getElementById("input-password-signup").value;
+    // end
     const currentUser = firebase.auth().currentUser;
     ref.child(currentUser.uid).push({
-        title:title,
-        password:password,
+        title: title,
+        password: password,
     })
     console.log("Add list complete");
-    document.getElementById("user").value = "";
-    document.getElementById("password").value = "";
+    title = "";
+    password = "";
 }
 
-function ReadList(snapshot){
+function ReadList(snapshot) {
     document.getElementById("name-list").innerHTML = ``;
-    snapshot.forEach((data) =>{
+    snapshot.forEach((data) => {
         const id = data.key;
         const title = data.val().title;
         const password = data.val().password;
@@ -31,26 +36,27 @@ function ReadList(snapshot){
         const newElement = document.createRange().createContextualFragment(newDiv);
         document.getElementById("name-list").appendChild(newElement);
     })
-    document.querySelectorAll("button.btn-delete").forEach(btn =>{
+    document.querySelectorAll("button.btn-delete").forEach(btn => {
         btn.addEventListener("click", deleteList);
-            // const id = event.currentTarget.getAttribute('data-id');
-            // ref.child(id).remove();
-            //console.log(`delete on id: ${id}`);
+        // const id = event.currentTarget.getAttribute('data-id');
+        // ref.child(id).remove();
+        //console.log(`delete on id: ${id}`);
         //});
-        })
+    })
 }
 
 // ref.on("value", (data) =>{
 //     ReadList(data)
 // })
 
-function getList(user){
-    if(user){
-    ref.child(user.uid).on('value',(snapshot) =>{
-        ReadList(snapshot);
+function getList(user) {
+    if (user) {
+        ref.child(user.uid).on('value', (snapshot) => {
+            ReadList(snapshot);
         })
     }
 }
+
 function deleteList(event) {
     const id = event.currentTarget.getAttribute('data-id');
     const currentUser = firebase.auth().currentUser;
@@ -61,7 +67,7 @@ const logoutItems = document.querySelectorAll('.logged-out');
 const loginItems = document.querySelectorAll('.logged-in');
 
 function setupUI(user) {
-    if(user) {
+    if (user) {
         loginItems.forEach(item => item.style.display = 'inline-block');
         logoutItems.forEach(item => item.style.display = 'none');
     } else {

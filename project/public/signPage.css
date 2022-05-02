@@ -18,6 +18,7 @@
     font-size: 5.5vw;
     text-align: center;
     margin-top: 0;
+    margin-bottom: 5%;
 }
 
 .sign-form {
@@ -72,6 +73,12 @@ label[for=":"] {
     cursor: pointer;
 }
 
+.feedback-sign {
+    text-align: center;
+    font-size: 2vw;
+    /* background-color: aliceblue; */
+}
+
 .sign-footer {
     /* border: 3px solid red;
     box-sizing:border-box; */
@@ -95,22 +102,27 @@ label[for=":"] {
         min-height: fit-content;
         width: 70vw;
     }
+
     .sign-title {
         font-size: 10vw;
     }
+
     .sign-label {
         justify-content: flex-start;
         font-size: 4vw;
         width: 100%;
     }
+
     label[for=":"] {
         display: none;
     }
+
     .sign-input {
         width: 100%;
         margin-right: 0;
         height: 4vh;
     }
+
     .sign-footer p {
         font-size: 3vw;
     }

@@ -1,8 +1,9 @@
-const signupForm = document.querySelector("#signup-form");
+// const signupForm = document.querySelector("#signup-form");
+const signupForm = document.querySelector("#signUp-form");
 signupForm.addEventListener("submit", createUser);
 
 const signupFeedback = document.querySelector("#feedback-msg-signup");
-const signupModal = new bootstrap.Modal(document.querySelector("#modal-signup"));
+const signupModal = new bootstrap.Modal(document.querySelector("#signUp-page"));
 
 function createUser(event) {
 
@@ -15,9 +16,12 @@ function createUser(event) {
         .then(() => {
             signupFeedback.style = `color:green`;
             signupFeedback.innerText = `Sign completed`;
-            setTimeout(function () {
+            setTimeout(function() {
                 signupModal.hide();
             }, 1000);
+            // oom add
+            goToMenuPage()
+                //end
         })
         .catch((error) => {
             signupFeedback.style = `color:crimson`;
@@ -30,6 +34,10 @@ const btnLogout = document.querySelector('#btnLogout');
 btnLogout.addEventListener('click', () => {
     firebase.auth().signOut();
     console.log('logout complete');
+    //oom add
+    resetSignInput()
+    goToSignInPage()
+        //end
 })
 
 firebase.auth().onAuthStateChanged((user => {
@@ -42,7 +50,8 @@ const loginForm = document.querySelector('#login-form');
 loginForm.addEventListener('submit', loginUser);
 
 const loginFeedback = document.querySelector('#feedback-msg-login');
-const loginModal = new bootstrap.Modal(document.querySelector('#modal-login'));
+// const loginModal = new bootstrap.Modal(document.querySelector('#signin-page'));
+const loginModal = new bootstrap.Modal(document.querySelector('#signIn-page'));
 
 function loginUser(event) {
     event.preventDefault();
@@ -55,9 +64,12 @@ function loginUser(event) {
         .then(() => {
             loginFeedback.style = `color:green`;
             loginFeedback.innerText = `Sign completed`;
-            setTimeout(function () {
+            setTimeout(function() {
                 loginModal.hide();
             }, 1000);
+            // oom add
+            goToMenuPage()
+                //end
         })
         .catch((error) => {
             loginFeedback.style = `color:crimson`;
@@ -68,9 +80,13 @@ function loginUser(event) {
 }
 const btnCancel = document.querySelectorAll('.btn-cancel').forEach(btn => {
     btn.addEventListener('click', () => {
-        signupForm.reset();
-        signupFeedback.innerHTML = ``;
-        loginForm.reset();
-        loginFeedback.innerHTML = ``;
+        resetSignInput()
     })
 })
+
+function resetSignInput() {
+    signupForm.reset();
+    signupFeedback.innerHTML = ``;
+    loginForm.reset();
+    loginFeedback.innerHTML = ``;
+}
