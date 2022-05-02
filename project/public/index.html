@@ -23,81 +23,6 @@
 </head>
 
 <body>
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark  ">
-        <img src="logospin1.png" style="width:80px;margin-left: 20px;" alt="">
-        <div class="container-fluid">
-            <a class="navbar-brand" herf="#"></a>
-            <nav>
-                <button typr="button" id="btnSignup" class="btn btn-outline-light logged-out" data-bs-toggle="modal" data-bs-target="#modal-signup">
-          <i class="D1 D1-person-pius-fill"></i>Sign up
-        </button>
-                <button typr="button" id="btnLogin" class="btn btn-outline-light  logged-out" data-bs-toggle="modal" data-bs-target="#modal-login">
-          <i class="b1 b1-box-arrow-right"></i>Login
-        </button>
-                <span class="logged-in">
-          <span id="user-profile-name" class="display-name" style="color: aliceblue"></span>
-                <span id="scoreplayer" class="display-name" style="color: white;"></span>
-                </span>
-                <button typr="button" id="btnLogout" class="btn btn-outline-light  logged-in" data-bs-toggle="modal" data-bs-target="#modal-logout">
-
-          <i class="b1 b1-box-arrow-right"></i>Logout
-        </button>
-            </nav>
-        </div>
-
-    </nav> -->
-
-
-    <!-- <div class="modal" id="modal-login" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Login</h5>
-                    <button type="button" class="btn-close btn-cancel" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="login-form" action='' class=''>
-                    <div class="modal-body">
-                        <input id="input-email-login" type="email" class="form-control" placeholder="Username" aria-label="title" aria-describedby="basic-addon1" required>
-                        <br />
-                        <input id="input-password-login" type="password" class="form-control" placeholder="Password" aria-label="title" aria-describedby="basic-addon1" required>
-                        <p id="feedback-msg-login"></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-cancel" data-bs-dismiss="modal">
-              Cancel
-            </button>
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- <div class="modal" id="modal-signup" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Sign Up</h5>
-                    <button type="button" class="btn-close btn-cancel" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="signup-form" action='' class=''>
-                    <div class="modal-body">
-                        <input id="input-email-signup" type="email" class="form-control" placeholder="Username" aria-label="title" aria-describedby="basic-addon1" required>
-                        <br />
-                        <input id="input-password-signup" type="password" class="form-control" placeholder="Password" aria-label="title" aria-describedby="basic-addon1" required>
-                        <p id="feedback-msg-signup"></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-cancel" data-bs-dismiss="modal">
-              Cancel
-            </button>
-                        <button type="submit" class="btn btn-primary">Sign up</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div> -->
-
     <div id="signIn-page" class="page">
         <div id="signIn" class="sign">
             <p id="signIn-title" class="sign-title">Sign In</p>
@@ -157,16 +82,19 @@
         </div>
     </div>
 
-
-    <div id="menu-page" class="page">
-        <h1>TIC-TAC-TOE Gravity</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark  d-flex justify-content-end">
+        <span class="logged-in">
+            <span id="user-profile-name" class="display-name" style="color: aliceblue"></span>
+            <span id="scoreplayer" class="display-name" style="color: white;"></span>
+        </span>
         <button typr="button" id="btnLogout" class="btn btn-outline-light  logged-in">
             <i class="b1 b1-box-arrow-right"></i>Logout
         </button>
-        <span class="logged-in">
-            <span id="user-profile-name" class="display-name" style="color: aliceblue">dw</span>
-            <!-- <span id="scoreplayer" class="display-name" style="color: white;"></span> -->
-        </span>
+    </nav>
+    <div id="menu-page" class="page">
+        
+        
+        <h1>TIC-TAC-TOE Gravity</h1>
         <div id="menu-all">
             <div id="menu-random" class="menu">
                 <p>Random player</p>
@@ -183,6 +111,15 @@
         </div>
     </div>
 
+
+    <div id="game-over-text" class="overlay-text">
+        GAME OVER
+        <span class="overlay-text-small">Click to Restart</span>
+      </div>
+      <div id="victory-text" class="overlay-text">
+        VICTORY
+        <span class="overlay-text-small">Click to Restart</span>
+      </div>
     <div id="game-page" class="container">
         <div class="container-fluid">
             <div class="form">
@@ -364,7 +301,6 @@
 <script type="text/javascript" src="gamenew.js"></script>
 <script type="text/javascript" src="pageToggle.js"></script>
 <script type="text/javascript" src="auth.js"></script>
-<script type="text/javascript" src="gamenew.js"></script>
 <!-- <script type="text/javascript" src="game.js"></script> -->
 <!-- <script type="text/javascript" src="normal.js"></script> -->
 <script type="text/javascript" src="app.js"></script>

@@ -347,19 +347,26 @@ function final() {
                     scores = snapshot.val()
                     if (!scores || !scores[id]) {
                         refScore.update({
-                            [id]: 3
+                            [id]: 1
                         })
+                        console.log(scores[id]);
                     }
                     else {
                         score = scores[id]
                         refScore.update({
-                            [id]: parseInt(score) + 3
+                            [id]: parseInt(score) + 1
                         })
+                        console.log(scores[id]);
                     }
                 })
                 return
             }
-            if (data["tables"]["row-1-col-1"] && data["tables"]["row-1-col-2"] && data["tables"]["row-1-col-3"] && data["tables"]["row-2-col-1"] && data["tables"]["row-2-col-2"] && data["tables"]["row-3-col-1"] && data["tables"]["row-3-col-2"] && data["tables"]["row-3-col-3"]) {
+            if (data["tables"]["row-1-col-1"] && data["tables"]["row-1-col-2"] && data["tables"]["row-1-col-3"] && data["tables"]["row-1-col-4"] && data["tables"]["row-1-col-5"] &&
+            data["tables"]["row-2-col-1"] && data["tables"]["row-2-col-2"] && data["tables"]["row-2-col-3"] && data["tables"]["row-2-col-4"] && data["tables"]["row-2-col-5"] &&
+            data["tables"]["row-3-col-1"] && data["tables"]["row-3-col-2"] && data["tables"]["row-3-col-3"] && data["tables"]["row-3-col-4"] && data["tables"]["row-3-col-5"] &&
+            data["tables"]["row-4-col-1"] && data["tables"]["row-4-col-2"] && data["tables"]["row-4-col-3"] && data["tables"]["row-4-col-4"] && data["tables"]["row-4-col-5"] &&
+            data["tables"]["row-5-col-1"] && data["tables"]["row-5-col-2"] && data["tables"]["row-5-col-3"] && data["tables"]["row-5-col-4"] && data["tables"]["row-5-col-5"] ){
+                console.log('affdraw')
                 ref.child("game-1").update({
                     status: "finish",
                     winner: "draw"
@@ -370,24 +377,24 @@ function final() {
                     scores = snapshot.val()
                     if (!scores || !scores[id1]) {
                         refScore.update({
-                            [id1]: 1
+                            [id1]: 0
                         })
                     }
                     else {
                         score = scores[id1]
                         refScore.update({
-                            [id1]: parseInt(score) + 1
+                            [id1]: parseInt(score) + 0
                         })
                     }
                     if (!scores || !scores[id2]) {
                         refScore.update({
-                            [id2]: 1
+                            [id2]: 0
                         })
                     }
                     else {
                         score = scores[id2]
                         refScore.update({
-                            [id2]: parseInt(score) + 1
+                            [id2]: parseInt(score) + 0
                         })
                     }
                     return

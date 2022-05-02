@@ -102,10 +102,10 @@ box-sizing: border-box; */
 }
 
 
-/* nav {
+ nav {
   position: fixed;
   width: 100%;
-} */
+} 
 
 nav .back-icon {
     font-size: 3vw;
@@ -159,3 +159,27 @@ nav .back-icon {
 .display-1{
     font-size: 8vh;
 }
+.overlay-text {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: none;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #ffd900;
+    font-family: Creepy, serif;
+    transition: background-color 500ms, font-size 500ms;
+  }
+  
+  .overlay-text-small {
+    font-size: .3em;
+  }
+  
+  .overlay-text.visible {
+    display: flex;
+    animation: overlay-grow 500ms forwards;
+  }
