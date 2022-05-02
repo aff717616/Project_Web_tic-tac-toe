@@ -184,95 +184,164 @@
     </div>
 
     <div id="game-page" class="container">
-        <div class="currentPlayer">
-            <span id="currentPlayer_status">The current player is</span>
-            <span class="player"></span>
+        <div class="container-fluid">
+            <div class="form">
+                <form class="form-inline row">
+                    <div class="form-group mb-2 row col-10">
+                        <label for="inputPlayer-o" class="col-form-label col-2" style="color:white;">Players O:</label>
+                        <div class="col-10">
+                            <input readonly type="text" class="form-control" id="inputPlayer-o" placeholder="Player 1"
+                                style="border: 3.5px solid black;border-radius: 10px;">
+                        </div>
+                    </div>
+                    <div class="form-group mb-2 col-2">
+                        <button type="button" id="btnJoin-o" class="btn btn-primary btn-join">Join</button>
+                        <button type="button" id="btnCancel-o"
+                            class="btn btn-secondary btn-cancel-join-game">Cancel</button>
+                    </div>
+                </form>
+            </div>
+            <div class="container d-flex justify-content-center mb-2">
+                <button type="button" id="btnStartGame" class="btn btn-success mx-1 logged-in">START GAME</button>
+                <button type="button" id="btnTerminateGame" class="btn btn-warning mx-1 logged-in">END GAME</button>
+            </div>
+    
+            
+            <div id="table" class="container mb-2">
+                <div class="row" id="row-1 " style="height: 12vh;">
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-1-col-1">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-1-col-2">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-1-col-3">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-1-col-4">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-1-col-5">
+                        <p class="display-1"></p>
+                    </div>
+                </div>
+                <div class="row" id="row-2" style="height: 12vh;">
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-2-col-1">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-2-col-2">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-2-col-3">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-2-col-4">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-2-col-5">
+                        <p class="display-1"></p>
+                    </div>
+                </div>
+                <div class="row" id="row-3" style="height: 12vh;">
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-3-col-1">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-3-col-2">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-3-col-3">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-3-col-4">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-3-col-5">
+                        <p class="display-1"></p>
+                    </div>
+                </div>
+                <div class="row" id="row-4" style="height: 12vh;">
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-4-col-1">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-4-col-2">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-4-col-3">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-4-col-4">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-4-col-5">
+                        <p class="display-1"></p>
+                    </div>
+                </div>
+                <div class="row" id="row-5" style="height: 12vh;">
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-5-col-1">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-5-col-2">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-5-col-3">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-5-col-4">
+                        <p class="display-1"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center table-col tabel_border"
+                        id="row-5-col-5">
+                        <p class="display-1"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="container" id="currentplayer">
+                <div class="container d-flex justify-content-center mb-2">
+                    <h4 id="status-text">Waiting for player...</h4>
+                </div>
+            </div>
+            <div class="form2">
+                <form class="form-inline row">
+                    <div class="form-group mb-2 row col-10">
+                        <label for="inputPlayer-x" class="col-form-label col-2" style="color:white;">Players X:</label>
+                        <div class="col-10">
+                            <input readonly type="text" class="form-control" id="inputPlayer-x" placeholder="Player 2"
+                                style="border: 3.5px solid black;border-radius: 10px;">
+                        </div>
+                    </div>
+                    <div class="form-group mb-2 col-2">
+                        <button type="button" id="btnJoin-x" class="btn btn-primary btn-join">Join</button>
+                        <button type="button" id="btnCancel-x"
+                            class="btn btn-secondary btn-cancel-join-game">Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="row" id="row-1 " style="height: 11rem;">
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-1-col-1">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-1-col-2">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-1-col-3">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-1-col-4">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-1-col-5">
-                <p class="display-1"></p>
-            </div>
-        </div>
-        <div class="row" id="row-2" style="height: 11rem;">
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-2-col-1">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-2-col-2">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-2-col-3">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-2-col-4">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-2-col-5">
-                <p class="display-1"></p>
-            </div>
-        </div>
-        <div class="row" id="row-3" style="height: 11rem;">
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-3-col-1">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-3-col-2">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-3-col-3">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-3-col-4">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-3-col-5">
-                <p class="display-1"></p>
-            </div>
-        </div>
-        <div class="row" id="row-4" style="height: 11rem;">
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-4-col-1">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-4-col-2">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-4-col-3">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-4-col-4">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-4-col-5">
-                <p class="display-1"></p>
-            </div>
-        </div>
-        <div class="row" id="row-5" style="height: 11rem;">
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-5-col-1">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-5-col-2">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-5-col-3">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-5-col-4">
-                <p class="display-1"></p>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center table-col" id="row-5-col-5">
-                <p class="display-1"></p>
-            </div>
-        </div>
+        <script src="https://kit.fontawesome.com/2bb5e62079.js" crossorigin="anonymous"></script>
 
 
     </div>
@@ -295,7 +364,7 @@
 <script type="text/javascript" src="gamenew.js"></script>
 <script type="text/javascript" src="pageToggle.js"></script>
 <script type="text/javascript" src="auth.js"></script>
-<script type="text/javascript" src="game.js"></script>
+<script type="text/javascript" src="gamenew.js"></script>
 <!-- <script type="text/javascript" src="game.js"></script> -->
 <!-- <script type="text/javascript" src="normal.js"></script> -->
 <script type="text/javascript" src="app.js"></script>
