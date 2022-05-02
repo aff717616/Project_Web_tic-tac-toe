@@ -36,7 +36,8 @@ function setupUI(user) {
 ref.on("value", snapshot => {
     getGameInfo(snapshot)
 })
-
+let countwino = 0;
+let countwinx = 0;
 function getGameInfo(snapshot) {
     const currentUser = firebase.auth().currentUser
 
@@ -119,6 +120,7 @@ function getGameInfo(snapshot) {
         else if (gameInfos.winner) {
             document.querySelector("#status-text").innerHTML = `Winner: ${gameInfos.winner}`
         }
+        
     });
 }
 
@@ -338,7 +340,7 @@ function final() {
                 num21 || num22 || num23 || num24 || num25 || num26 || num27 || num28 || num29 || num30 ||
                 num31 || num32 || num33 || num34 || num35 || num36 || num37 || num38 || num39 || num40 ||
                 num41 || num42 || num43 || num44 || num45 || num46 || num47 || num48 ) {
-                ref.child("game-1").update({
+                    ref.child("game-1").update({
                     status: "finish",
                     winner: turn
                 })
@@ -349,14 +351,14 @@ function final() {
                         refScore.update({
                             [id]: 1
                         })
-                        console.log(scores[id]);
+                        changeyellow()
                     }
                     else {
                         score = scores[id]
                         refScore.update({
                             [id]: parseInt(score) + 1
                         })
-                        console.log(scores[id]);
+                        changeyellow()
                     }
                 })
                 return
@@ -402,4 +404,52 @@ function final() {
             }
         }
     })
+}
+
+function changeyellow(){
+    if (document.querySelector("#status-text").innerHTML == `Winner: O`){
+        countwino += 1 ;
+    }else if (document.querySelector("#status-text").innerHTML == `Winner: X`){
+        countwinx += 1 ;
+    }if (countwino == 1){
+        document.getElementById('ofirst').style.color='yellow';
+        document.getElementById("wino-text").style.display = "block";
+    }else if (countwino == 2){
+        document.getElementById('osecond').style.color='yellow';
+        document.getElementById("wino-text").style.display = "block";
+    }else if (countwino == 3){
+        document.getElementById('othird').style.color='yellow';
+        document.getElementById("victoryo-text").style.display = "block";
+    }if (countwinx == 1){
+        document.getElementById('xfirst').style.color='yellow';
+        document.getElementById("winx-text").style.display = "block";
+    }else if (countwinx == 2){
+        document.getElementById('xsecond').style.color='yellow';
+        document.getElementById("winx-text").style.display = "block";
+    }else if (countwinx == 3){
+        document.getElementById('xthird').style.color='yellow';
+        document.getElementById("victoryx-text").style.display = "block";
+    }else{
+        countwinx = 0
+        countwino = 0
+    }
+}
+function off(){
+    document.getElementById("victoryx-text").style.display = "none";
+    document.getElementById("victoryo-text").style.display = "none";
+    countwinx = 0
+    countwino = 0
+    document.getElementById('xfirst').style.color='white';
+    document.getElementById('xsecond').style.color='white';
+    document.getElementById('xthird').style.color='white';
+    document.getElementById('ofirst').style.color='white';
+    document.getElementById('osecond').style.color='white';
+    document.getElementById('othird').style.color='white';
+    stopgame();
+}
+
+function offwin(){
+    document.getElementById("winx-text").style.display = "none";
+    document.getElementById("wino-text").style.display = "none";
+    stopgame();
 }

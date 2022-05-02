@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="./signPage.css">
     <link rel="stylesheet" href="./menuPage.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -111,32 +112,43 @@
         </div>
     </div>
 
-
-    <div id="game-over-text" class="overlay-text">
-        GAME OVER
-        <span class="overlay-text-small">Click to Restart</span>
+      <div id="victoryx-text" class="overlay-text" onclick="off()">
+        <div class="textwinx">X WINNER</div>
       </div>
-      <div id="victory-text" class="overlay-text">
-        VICTORY
-        <span class="overlay-text-small">Click to Restart</span>
+      <div id="victoryo-text" class="overlay-text" onclick="off()">
+        <div class="textwino">O WINNER</div>
+      </div>
+
+      <div id="winx-text" class="overlay-text" onclick="offwin()">
+        <div class="textwinx">X WIN</div>
+      </div>
+
+      <div id="wino-text" class="overlay-text" onclick="offwin()">
+        <div class="textwino">O WIN</div>
       </div>
     <div id="game-page" class="container">
         <div class="container-fluid">
             <div class="form">
                 <form class="form-inline row">
                     <div class="form-group mb-2 row col-10">
-                        <label for="inputPlayer-o" class="col-form-label col-2" style="color:white;">Players O:</label>
+                        <label for="inputPlayer-o" class="col-form-label col-2" style="color:white;">Players O:
+                            <div>
+                                <i class="fa fa-circle" aria-hidden="true" id="ofirst"></i>
+                                <i class="fa fa-circle" aria-hidden="true" id="osecond"></i>
+                                <i class="fa fa-circle" aria-hidden="true" id="othird"></i></div></label>
                         <div class="col-10">
                             <input readonly type="text" class="form-control" id="inputPlayer-o" placeholder="Player 1"
                                 style="border: 3.5px solid black;border-radius: 10px;">
                         </div>
                     </div>
+                    
                     <div class="form-group mb-2 col-2">
                         <button type="button" id="btnJoin-o" class="btn btn-primary btn-join">Join</button>
                         <button type="button" id="btnCancel-o"
                             class="btn btn-secondary btn-cancel-join-game">Cancel</button>
                     </div>
                 </form>
+                
             </div>
             <div class="container d-flex justify-content-center mb-2">
                 <button type="button" id="btnStartGame" class="btn btn-success mx-1 logged-in">START GAME</button>
@@ -264,7 +276,11 @@
             <div class="form2">
                 <form class="form-inline row">
                     <div class="form-group mb-2 row col-10">
-                        <label for="inputPlayer-x" class="col-form-label col-2" style="color:white;">Players X:</label>
+                        <label for="inputPlayer-x" class="col-form-label col-2" style="color:white;">Players X:
+                            <div>
+                                <i class="fa fa-circle" aria-hidden="true" id="xfirst"></i>
+                                <i class="fa fa-circle" aria-hidden="true" id="xsecond"></i>
+                                <i class="fa fa-circle" aria-hidden="true" id="xthird"></i></div></label>
                         <div class="col-10">
                             <input readonly type="text" class="form-control" id="inputPlayer-x" placeholder="Player 2"
                                 style="border: 3.5px solid black;border-radius: 10px;">
