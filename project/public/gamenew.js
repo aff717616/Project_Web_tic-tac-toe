@@ -167,19 +167,32 @@ function cancel_join(event) {
             document.querySelector(`#btnJoin-${player}`).disabled = false
         }
     }
+    off()
 }
-
+let toggle = 0;
 const btnStartGame = document.querySelector("#btnStartGame");
 const btnTerminateGame = document.querySelector("#btnTerminateGame");
+const btngotomenu = document.querySelector("#btnmenugame");
 btnStartGame.addEventListener("click", startgame);
 btnTerminateGame.addEventListener("click", stopgame);
+btngotomenu.addEventListener("click", off());
 
 function startgame(event) {
+    if (toggle ==0){
     ref.child("game-1").update({
         status: "start",
         turn: "X",
         tables: ""
     })
+    toggle = 1;
+    }else if(toggle == 1){
+        ref.child("game-1").update({
+            status: "start",
+            turn: "O",
+            tables: ""
+        })
+        toggle = 0;
+    }
 }
 function stopgame(event) {
     ref.child("game-1").child("status").remove()

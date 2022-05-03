@@ -1,11 +1,28 @@
+:root {
+    --gradient: linear-gradient(
+        30deg,
+        #6b00ae,
+        #b732ff,
+        #c760ff,
+        #cb6aff,
+        #b62eff,
+        #6b00ae
+    );
+}
+
 html,
 body {
-    height: 99%;
-    background-color: #4A478D;
+    height: 105%;
+    background-image: var(--gradient);
+    background-size: 400%;
+    animation: bg-animation 5s infinite alternate;
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
+@keyframes bg-animation {
+    0% {background-position : left;}
+    100% {background-position:  right;}
+}
 
 
 .content-2 {
@@ -128,14 +145,13 @@ nav .back-icon {
 #table {
     height: 60vh;
     width: 40vw;
-    margin-top: 6vh;
+    margin-top: 2vh;
     background-color: white;
 
 }
 
 .tabel_border {
     border: 2px solid black;
-
 }
 
 #currentplayer {
@@ -153,7 +169,7 @@ nav .back-icon {
 .form2 {
     height: 10vh;
     width: 90vw;
-    margin-top: 2vh;
+    margin-top: 1vh;
     text-align: center;
 }
 .display-1{

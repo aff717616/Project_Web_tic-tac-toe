@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gravity spin tic tac toe</title>
+    <title >Gravity spin tic tac toe</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -56,10 +56,10 @@
         <div id="signUp" class="sign">
             <p id="signUp-title" class="sign-title">Sign Up</p>
             <form action="" id="signUp-form" class="sign-form">
-                <label for="signUp-username" class="sign-label">Username</label>
+                <!-- <label for="signUp-username" class="sign-label">Username</label>
                 <label for=":">:</label>
                 <input type="text" name="username" id="signUp-username" class="sign-input" aria-label="title"
-                    aria-describedby="basic-addon1" required>
+                    aria-describedby="basic-addon1" required> -->
 
                 <label for="signUp-email" class="sign-label">Email</label>
                 <label for=":">:</label>
@@ -85,8 +85,8 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark  d-flex justify-content-end">
         <span class="logged-in">
-            <span id="user-profile-name" class="display-name" style="color: aliceblue"></span>
-            <span id="scoreplayer" class="display-name" style="color: white;"></span>
+            <span id="user-profile-name" class="display-name mx-1 " style="color: aliceblue"></span>
+            <!-- <span id="scoreplayer" class="display-name" style="color: white;"></span> -->
         </span>
         <button typr="button" id="btnLogout" class="btn btn-outline-light  logged-in">
             <i class="b1 b1-box-arrow-right"></i>Logout
@@ -95,7 +95,7 @@
     <div id="menu-page" class="page">
         
         
-        <h1>TIC-TAC-TOE Gravity</h1>
+        <h1 style="color:white"><img src="./logospin1.png" style="width:10vh">Gravity Spin TIC-TAC-TOE</h1>
         <div id="menu-all">
             <div id="menu-random" class="menu">
                 <p>Random player</p>
@@ -131,7 +131,7 @@
             <div class="form">
                 <form class="form-inline row">
                     <div class="form-group mb-2 row col-10">
-                        <label for="inputPlayer-o" class="col-form-label col-2" style="color:white;">Players O:
+                        <label for="inputPlayer-o" class="col-form-label col-2 " style="font-weight: bold;font-size:20px;border:5px solid red;border-radius: 10px;background-color: rgb(255, 103, 103);">Players O:
                             <div>
                                 <i class="fa fa-circle" aria-hidden="true" id="ofirst"></i>
                                 <i class="fa fa-circle" aria-hidden="true" id="osecond"></i>
@@ -152,8 +152,9 @@
             </div>
             <div class="container d-flex justify-content-center mb-2">
                 <button type="button" id="btnStartGame" class="btn btn-success mx-1 logged-in">START GAME</button>
-                <button type="button" id="btnTerminateGame" class="btn btn-warning mx-1 logged-in">END GAME</button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tutorial">TUTORIAL?</button>
+                <button type="button" id="btnTerminateGame" class="btn btn-danger mx-1 logged-in">END GAME</button>
+                <button type="button" class="btn btn-info mx-1 text-white" data-bs-toggle="modal" data-bs-target="#tutorial">TUTORIAL?</button>
+                <button type="button" id="btnmenugame" class="btn btn-primary mx-1" onclick="goToMenuPage()">MENU</button>
             </div>
     
             
@@ -270,14 +271,14 @@
                 </div>
             </div>
             <div class="container" id="currentplayer">
-                <div class="container d-flex justify-content-center mb-2">
+                <div class="container d-flex justify-content-center ">
                     <h4 id="status-text">Waiting for player...</h4>
                 </div>
             </div>
             <div class="form2">
                 <form class="form-inline row">
                     <div class="form-group mb-2 row col-10">
-                        <label for="inputPlayer-x" class="col-form-label col-2" style="color:white;">Players X:
+                        <label for="inputPlayer-x" class="col-form-label col-2 " style="font-weight: bold;font-size:20px;border:5px solid rgb(0, 76, 255);border-radius: 10px;background-color: rgb(1, 175, 255);">Players X:
                             <div>
                                 <i class="fa fa-circle" aria-hidden="true" id="xfirst"></i>
                                 <i class="fa fa-circle" aria-hidden="true" id="xsecond"></i>
