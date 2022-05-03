@@ -409,26 +409,33 @@ function final() {
 function changeyellow(){
     if (document.querySelector("#status-text").innerHTML == `Winner: O`){
         countwino += 1 ;
-    }else if (document.querySelector("#status-text").innerHTML == `Winner: X`){
-        countwinx += 1 ;
-    }if (countwino == 1){
-        document.getElementById('ofirst').style.color='yellow';
+        if (countwino == 3){
+            document.getElementById("victoryo-text").style.display = "block";
+        }else{
         document.getElementById("wino-text").style.display = "block";
+        }
+    }else if (document.querySelector("#status-text").innerHTML == `Winner: X`){
+        countwinx += 1;
+        if (countwinx == 3){
+            document.getElementById("victoryx-text").style.display = "block";
+        }else{
+        document.getElementById("winx-text").style.display = "block";
+        }
+    }
+    
+    
+    if (countwino == 1){
+        document.getElementById('ofirst').style.color='yellow';
     }else if (countwino == 2){
         document.getElementById('osecond').style.color='yellow';
-        document.getElementById("wino-text").style.display = "block";
     }else if (countwino == 3){
         document.getElementById('othird').style.color='yellow';
-        document.getElementById("victoryo-text").style.display = "block";
     }if (countwinx == 1){
         document.getElementById('xfirst').style.color='yellow';
-        document.getElementById("winx-text").style.display = "block";
     }else if (countwinx == 2){
         document.getElementById('xsecond').style.color='yellow';
-        document.getElementById("winx-text").style.display = "block";
     }else if (countwinx == 3){
         document.getElementById('xthird').style.color='yellow';
-        document.getElementById("victoryx-text").style.display = "block";
     }else{
         countwinx = 0
         countwino = 0
