@@ -1,13 +1,11 @@
 :root {
-    --gradient: linear-gradient(
-        30deg,
-        #6b00ae,
-        #b732ff,
-        #c760ff,
-        #cb6aff,
-        #b62eff,
-        #6b00ae
-    );
+    --gradient: linear-gradient(30deg,
+            #7631a1,
+            #5f1ac0,
+            #5518d9,
+            #4e40f0,
+            #5372fc,
+            #65d6ff);
 }
 
 html,
@@ -15,13 +13,19 @@ body {
     height: 105%;
     background-image: var(--gradient);
     background-size: 400%;
-    animation: bg-animation 5s infinite alternate;
+    animation: bg-animation 8s infinite alternate;
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 @keyframes bg-animation {
-    0% {background-position : left;}
-    100% {background-position:  right;}
+    0% {
+        background-position: left;
+    }
+
+    100% {
+        background-position: right;
+    }
 }
 
 
@@ -119,10 +123,10 @@ box-sizing: border-box; */
 }
 
 
- nav {
-  position: fixed;
-  width: 100%;
-} 
+nav {
+    position: fixed;
+    width: 100%;
+}
 
 nav .back-icon {
     font-size: 3vw;
@@ -172,9 +176,11 @@ nav .back-icon {
     margin-top: 1vh;
     text-align: center;
 }
-.display-1{
+
+.display-1 {
     font-size: 8vh;
 }
+
 .overlay-text {
     position: fixed;
     display: none;
@@ -184,28 +190,31 @@ nav .back-icon {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 2;
     cursor: pointer;
-  }
-  .textwinx{
+}
+
+.textwinx {
     position: absolute;
     top: 50%;
     left: 50%;
     font-size: 100px;
     color: rgb(255, 213, 0);
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-  }
-  .textwino{
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.textwino {
     position: absolute;
     top: 50%;
     left: 50%;
     font-size: 100px;
     color: rgb(255, 0, 0);
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-  }
-  .tutorial-body {
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.tutorial-body {
     height: 45vh;
 }
