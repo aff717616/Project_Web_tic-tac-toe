@@ -121,7 +121,12 @@ box-sizing: border-box; */
 #menu-page {
     display: none;
 }
-
+#menu-page {
+    display: none;
+}
+#game-page{
+    display: none;
+}
 
 nav {
     position: fixed;
