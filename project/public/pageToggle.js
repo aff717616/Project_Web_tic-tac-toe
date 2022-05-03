@@ -28,5 +28,5 @@ function goToGamePage() {
     signInPage.style.display = `none`;
     signUpPage.style.display = `none`;
     menuPage.style.display = `none`;
-    gamepage.style.display = `flex`;
+    gamepage.style.display = `block`;
 }

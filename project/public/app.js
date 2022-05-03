@@ -1,4 +1,3 @@
-// const form = document.querySelector('#add-todo-form');
 const form = document.querySelector('#signUp-form');
 form.addEventListener('submit', addList);
 

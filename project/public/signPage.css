@@ -102,22 +102,27 @@ label[for=":"] {
         min-height: fit-content;
         width: 70vw;
     }
+
     .sign-title {
         font-size: 10vw;
     }
+
     .sign-label {
         justify-content: flex-start;
         font-size: 4vw;
         width: 100%;
     }
+
     label[for=":"] {
         display: none;
     }
+
     .sign-input {
         width: 100%;
         margin-right: 0;
         height: 4vh;
     }
+
     .sign-footer p {
         font-size: 3vw;
     }

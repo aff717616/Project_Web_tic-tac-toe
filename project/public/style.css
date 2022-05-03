@@ -1,21 +1,33 @@
+:root {
+    --gradient: linear-gradient(30deg,
+            #7631a1,
+            #5f1ac0,
+            #5518d9,
+            #4e40f0,
+            #5372fc,
+            #65d6ff);
+}
+
 html,
 body {
-    height: 99%;
-    background-color: #4A478D;
+    height: 105%;
+    background-image: var(--gradient);
+    background-size: 400%;
+    animation: bg-animation 8s infinite alternate;
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.container {
-    background-color: #4A478D;
-    color: aliceblue;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    height: 100%;
-    justify-content: flex-start;
-    align-items: center;
+@keyframes bg-animation {
+    0% {
+        background-position: left;
+    }
+
+    100% {
+        background-position: right;
+    }
 }
+
 
 .content-2 {
     display: flex;
@@ -49,8 +61,8 @@ body {
 .board {
     display: flex;
     flex-wrap: wrap;
-    height: 290px;
-    width: 330px;
+    height: 1000px;
+    width: 1000px;
     background: rgb(0, 0, 0);
     justify-content: center;
     align-items: center;
@@ -111,10 +123,10 @@ box-sizing: border-box; */
 }
 
 
-/* nav {
-  position: fixed;
-  width: 100%;
-} */
+nav {
+    position: fixed;
+    width: 100%;
+}
 
 nav .back-icon {
     font-size: 3vw;
@@ -130,4 +142,79 @@ nav .back-icon {
         cursor: pointer;
         margin: 5% 0% 5% 4%;
     }
+}
+
+
+
+#table {
+    height: 60vh;
+    width: 40vw;
+    margin-top: 2vh;
+    background-color: white;
+
+}
+
+.tabel_border {
+    border: 2px solid black;
+}
+
+#currentplayer {
+    font-size: 2vh;
+    margin-top: 2vh;
+    height: 7vh;
+    width: 30vw;
+    text-align: center;
+    background-color: aliceblue;
+    border: 5px solid black;
+    border-radius: 10px;
+}
+
+.form,
+.form2 {
+    height: 10vh;
+    width: 90vw;
+    margin-top: 1vh;
+    text-align: center;
+}
+
+.display-1 {
+    font-size: 8vh;
+}
+
+.overlay-text {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+.textwinx {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 100px;
+    color: rgb(255, 213, 0);
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.textwino {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 100px;
+    color: rgb(255, 0, 0);
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.tutorial-body {
+    height: 45vh;
 }
