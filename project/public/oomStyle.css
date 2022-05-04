@@ -156,7 +156,7 @@ nav {
         padding: 0;
     }
     #button-4 {
-        border: 1px solid white;
+        /* border: 1px solid white; */
         margin-top: 7vh;
         padding: auto;
         display: flex;
