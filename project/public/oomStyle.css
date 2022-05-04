@@ -85,7 +85,7 @@ nav {
 #table .row {
     min-height: 12vh;
     max-height: fit-content;
-    background-color: aqua;
+    background-color: rgb(255, 255, 255);
 }
 
 #table .row .col {
