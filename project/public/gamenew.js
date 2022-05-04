@@ -51,28 +51,46 @@ function getGameInfo(snapshot) {
         const gameInfos = data.val()
         console.log(gameInfos);
         Object.keys(gameInfos).forEach(key => {
+            console.log('key');
+            console.log(key);
             switch (key) {
-                case 'user-x-email':
-                    playerX = gameInfos[key]
-                    document.getElementById('inputPlayer-x').value = playerX
-                    document.querySelector('#btnJoin-x').disabled = true;
-                    break
-                case 'user-o-email':
-                    playerO = gameInfos[key]
-                    document.getElementById('inputPlayer-o').value = playerO
-                    document.querySelector('#btnJoin-o').disabled = true;
-                    break
+                case 'user-x-id':
+                    
+                    if (gameInfos["1 room-id"] == roomid){
+                        
+                        playerX = gameInfos['user-x-email']
+                        console.log('keyyyyyyy');
+                        console.log(key);
+                        document.getElementById('inputPlayer-x').value = playerX
+                        document.querySelector('#btnJoin-x').disabled = true;
+                        break
+                    }else{
+                        break
+                    }
+                case 'user-o-id':
+                    if (gameInfos["1 room-id"] == roomid){
+                        playerO = gameInfos['user-o-email']
+                        console.log('keyyyyyyy');
+                        console.log(key);
+                        document.getElementById('inputPlayer-o').value = playerO
+                        document.querySelector('#btnJoin-o').disabled = true;
+                        break
+                    }else{
+                        break
+                    }
             }
 
-            if (currentUser.email == gameInfos[key]) {
-                document.querySelector('#btnJoin-x').disabled = true;
-                document.querySelector('#btnJoin-o').disabled = true;
-            }
+             if (currentUser.email == gameInfos[key]) {
+                 document.querySelector('#btnJoin-x').disabled = true;
+                 document.querySelector('#btnJoin-o').disabled = true;
+             }
         })
-        if (gameInfos["user-x-email"] && gameInfos["user-o-email"]) {
+        if (gameInfos["user-x-email"]=='Empty' && gameInfos["user-o-email"]=='Empty') {
+        }
+        else if (gameInfos["user-x-email"] && gameInfos["user-o-email"]) {
             document.querySelector("#btnStartGame").disabled = false
             document.querySelector("#status-text").innerHTML = "Click START GAME"
-        }
+        }  
         else {
             document.querySelector("#btnStartGame").disabled = true
             document.querySelector("#status-text").innerHTML = "Waiting for players..."
@@ -127,6 +145,94 @@ function getGameInfo(snapshot) {
 const btnJoins = document.querySelectorAll(".btn-join")
 btnJoins.forEach(btnJoin => btnJoin.addEventListener('click', joinGame))
 
+var roomid = ''
+
+function qjoinroom(){
+    roomid = '';
+        ref.once('value', snapshot => {
+            snapshot.forEach( (data) => {
+        
+                var user_1 = data.child('user-o-email').val()
+                var user_2 = data.child('user-x-email').val()
+                var room = data.child('1 room-id').val()
+                var player = [user_1, user_2];
+                if((user_1 != 'Empty' || user_2 != 'Empty') && player.includes("Empty")){
+                    roomid= room;
+                    return;
+                }
+            });
+            ref.once('value' , snapshot => {
+                const gameInfos = snapshot.val();
+                Object.keys(gameInfos).forEach(key => {
+                                if(key == roomid){
+                                    ref.once('value' , snapshot => {
+                                        getGameInfo(snapshot);
+                                        });
+                                        var user = firebase.auth().currentUser;
+                                        setupUI(user)
+                                        goToGamePage()
+                                        
+                                }
+                    });
+            });
+        });
+        
+    
+    if(roomid == ''){
+        alert("Room not Found");
+    }else{
+        alert("Join room");
+        document.querySelector('#room-text').innerHTML = roomid;
+        
+    }
+    
+}
+function joinroom(){
+    var room_id = '';
+    room_id = document.getElementById('input-room-id').value;
+    
+    if(room_id == ''){
+        joinFeedback.style = `color:crimson`;
+        joinFeedback.innerText = `Please insert Code`;
+        
+    }else if(room_id.length != 5){
+        joinFeedback.style = `color:crimson`;
+        joinFeedback.innerText = `invalid Code`;
+
+    }else{
+        roomid= room_id;
+        ref.once('value' , snapshot => {
+            var time = 0;
+            const gameInfos = snapshot.val();
+            try {
+                    Object.keys(gameInfos).forEach(key => {
+                            if(key == roomid){
+                                ref.once('value' , snapshot => {
+                                    getGameInfo(snapshot);
+                                    });
+                                    var user = firebase.auth().currentUser;
+                                    document.querySelector('#room-text').innerHTML = roomid;
+                                    setupUI(user)
+                                    showcreate()
+                                    joinFeedback.style = `color:green`;
+                                    joinFeedback.innerText = `joined room`;
+                                    time ++;
+                                    throw 'Break';
+                            }
+                            else{
+                            time ++;
+                                joinFeedback.style = `color:crimson`;
+                                joinFeedback.innerText = `room not found`;
+                                }
+                });
+              } catch (e) {
+                if (e !== 'Break') throw e
+              }
+
+        });
+    }
+    goToGamePage()
+}
 function joinGame(event) {
     const currentUser = firebase.auth().currentUser
     console.log("[Join] Current user:", currentUser);
@@ -137,14 +243,54 @@ function joinGame(event) {
         if (playerForm.value == "") {
             let tmpID = `user-${player}-id`
             let tmpEmail = `user-${player}-email`
-            ref.child('game-1').update({
+            ref.child(roomid).update({
                 [tmpID]: currentUser.uid,
-                [tmpEmail]: currentUser.email
+                [tmpEmail]: currentUser.email,
             })
             console.log(currentUser.email + " added.");
             event.currentTarget.disabled = true;
         }
     }
+}
+function createroom(){
+    var result           = '';
+    var characters       = '0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < 5; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+ charactersLength));
+   }
+   roomid=result;
+  ref.once('value', snapshot => {
+    snapshot.forEach( (data) => {
+
+        var user_1 = data.child('user-o-email').val()
+        var user_2 = data.child('user-x-email').val()
+        var room = data.child('1 room-id').val()
+        if(user_1 == 'Empty' && user_2 == 'Empty'){
+           ref.child(room).remove()
+        }
+
+    });
+});
+   ref.once('value' , snapshot => {
+        if(roomid){
+            
+           ref.child(roomid).update({
+            ['user-o-email']: 'Empty',
+            ['user-x-email']: 'Empty',
+            ['1 room-id']: roomid,})
+            getGameInfo(snapshot);
+        }else{
+    }
+    });
+   var user = firebase.auth().currentUser;
+//    document.querySelector('#room-text').innerHTML = roomid;
+    setupUI(user)
+    goToGamePage()
+    // showcreate()
+   return result;
+   
 }
 
 const btnCancels = document.querySelectorAll(".btn-cancel-join-game");
@@ -161,12 +307,18 @@ function cancel_join(event) {
         if (playerForm.value && playerForm.value === currentUser.email) {
             let tmpID = `user-${player}-id`
             let tmpEmail = `user-${player}-email`
-            ref.child('game-1').child(tmpID).remove()
-            ref.child('game-1').child(tmpEmail).remove()
+            ref.child(roomid).child(tmpID).remove()
+            ref.child(roomid).child(tmpEmail).remove()
             console.log(`delete on id: ${currentUser.uid}`);
             document.querySelector(`#btnJoin-${player}`).disabled = false
         }
     }
+    const btnCancelID = event.currentTarget.getAttribute("id");
+    const player = btnCancelID[btnCancelID.length - 1];
+    ref.child(roomid).update({
+        [`user-${player}-email`]: 'Empty',
+    });
+
     off()
 }
 let toggle = 0;
@@ -179,14 +331,14 @@ btngotomenu.addEventListener("click", off());
 
 function startgame(event) {
     if (toggle ==0){
-    ref.child("game-1").update({
+    ref.child(roomid).update({
         status: "start",
         turn: "X",
         tables: ""
     })
     toggle = 1;
     }else if(toggle == 1){
-        ref.child("game-1").update({
+        ref.child(roomid).update({
             status: "start",
             turn: "O",
             tables: ""
@@ -195,10 +347,10 @@ function startgame(event) {
     }
 }
 function stopgame(event) {
-    ref.child("game-1").child("status").remove()
-    ref.child("game-1").child("turn").remove()
-    ref.child("game-1").child("tables").remove()
-    ref.child("game-1").child("winner").remove()
+    ref.child(roomid).child("status").remove()
+    ref.child(roomid).child("turn").remove()
+    ref.child(roomid).child("tables").remove()
+    ref.child(roomid).child("winner").remove()
 }
 let col5full = 6
 let col4full = 6
@@ -208,7 +360,7 @@ let col1full = 6
 
 // add condition connect 4
 function Game_play(event) {
-    ref.child("game-1").once("value", snapshot => {
+    ref.child(roomid).once("value", snapshot => {
         data = snapshot.val()
         currentUser = firebase.auth().currentUser
         id = event.currentTarget.id
@@ -264,20 +416,20 @@ function Game_play(event) {
         }
         console.log(checkRow5)
         if (data.turn === "X" && data["user-x-email"] === currentUser.email && !data["tables"][id]) {
-            ref.child("game-1").child("tables").update({
+            ref.child(roomid).child("tables").update({
                 [id]: data.turn
                 
             })
             console.log(data.turn)
-            ref.child("game-1").update({
+            ref.child(roomid).update({
                 turn: "O"
             })
         }
         else if (data.turn === "O" && data["user-o-email"] === currentUser.email && !data["tables"][id]) {
-            ref.child("game-1").child("tables").update({
+            ref.child(roomid).child("tables").update({
                 [id]: data.turn
             })
-            ref.child("game-1").update({
+            ref.child(roomid).update({
                 turn: "X"
             })
         }
@@ -285,7 +437,7 @@ function Game_play(event) {
 }
 
 function final() {
-    ref.child("game-1").once("value", snapshot => {
+    ref.child(roomid).once("value", snapshot => {
         data = snapshot.val()
         currentUser = firebase.auth().currentUser
         turns = ["X", "O"]
@@ -353,7 +505,7 @@ function final() {
                 num21 || num22 || num23 || num24 || num25 || num26 || num27 || num28 || num29 || num30 ||
                 num31 || num32 || num33 || num34 || num35 || num36 || num37 || num38 || num39 || num40 ||
                 num41 || num42 || num43 || num44 || num45 || num46 || num47 || num48 ) {
-                    ref.child("game-1").update({
+                    ref.child(roomid).update({
                     status: "finish",
                     winner: turn
                 })
@@ -382,7 +534,7 @@ function final() {
             data["tables"]["row-4-col-1"] && data["tables"]["row-4-col-2"] && data["tables"]["row-4-col-3"] && data["tables"]["row-4-col-4"] && data["tables"]["row-4-col-5"] &&
             data["tables"]["row-5-col-1"] && data["tables"]["row-5-col-2"] && data["tables"]["row-5-col-3"] && data["tables"]["row-5-col-4"] && data["tables"]["row-5-col-5"] ){
                 console.log('affdraw')
-                ref.child("game-1").update({
+                ref.child(roomid).update({
                     status: "finish",
                     winner: "draw"
                 })
