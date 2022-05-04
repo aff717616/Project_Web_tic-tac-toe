@@ -17,6 +17,7 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .form,
@@ -76,6 +77,25 @@ nav {
     margin: auto;
 }
 
+#table {
+    /* background-color: pink; */
+    height: fit-content;
+}
+
+#table .row {
+    min-height: 12vh;
+    max-height: fit-content;
+    background-color: aqua;
+}
+
+#table .row .col {
+    width: 15%;
+}
+
+p.display-1 {
+    font-size: 400%;
+}
+
 @media all and (min-width: 700px) and (max-width: 1200px) {
     * {
         transition: all .4s;
@@ -92,6 +112,32 @@ nav {
         font-size: 4vw;
         margin: auto;
     }
+}
+
+.overlay-text {
+    width: 100%;
+    /* border: 3px solid white; */
+}
+
+.overlay-text div {
+    /* border: 3px solid red; */
+    text-align: center;
+    width: 80%;
+    font-size: 10vw;
+}
+
+#tutorial {
+    border: 3px solid yellow;
+}
+
+#tutorial .modal-dialog {
+    border: 3px solid red;
+    top: 25%;
+    height: 50%;
+}
+
+#tutorial .modal-dialog #carouselExampleControls {
+    border: 3px solid orange;
 }
 
 @media all and (max-width: 700px) {
@@ -157,6 +203,19 @@ nav {
     #button-4 button {
         width: 100%;
         margin: 1%;
+        border-radius: 20%;
+        margin-bottom: 10;
+        /* border: 3px solid black; */
+    }
+    .overlay-text {
+        width: 100%;
+        /* border: 3px solid white; */
+    }
+    .overlay-text div {
+        /* border: 3px solid red; */
+        text-align: center;
+        width: 80%;
+        font-size: 20vw;
     }
 }
 
