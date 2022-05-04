@@ -1,0 +1,171 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#user-profile-name {
+    padding-right: 1vw;
+}
+
+nav {
+    padding-right: 2vw;
+}
+
+#game-page .container-fluid {
+    /* border: 3px solid yellow; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form,
+.form2 {
+    /* border: 1px solid yellow; */
+    display: flex;
+    height: fit-content;
+}
+
+.form form,
+.form2 form {
+    /* border: 1px solid white; */
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.form .form-inline,
+.form2 .form-inline {
+    /* border: 2px solid red; */
+    height: fit-content;
+    display: flex;
+    flex: 1 1 100%;
+    justify-content: center;
+}
+
+.form-group {
+    /* border: 2px solid greenyellow; */
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-group>label {
+    height: fit-content;
+    /* border: 2px solid white; */
+}
+
+.form-group>div {
+    /* border: 2px solid white; */
+    display: flex;
+    align-items: center;
+}
+
+.form-group button {
+    /* border: 3px solid red; */
+    width: 100%;
+    margin: .2vw;
+}
+
+#currentplayer div {
+    height: 100%;
+}
+
+#currentplayer h4 {
+    margin: auto;
+}
+
+@media all and (min-width: 700px) and (max-width: 1200px) {
+    * {
+        transition: all .4s;
+    }
+    #table {
+        width: 100%;
+        transition: all .4s;
+    }
+    #currentplayer {
+        width: 70%;
+        height: 100%;
+    }
+    #currentplayer h4 {
+        font-size: 4vw;
+        margin: auto;
+    }
+}
+
+@media all and (max-width: 700px) {
+    * {
+        transition: all .4s;
+        margin: 0;
+        padding: 0;
+    }
+    #game-page {
+        padding-bottom: 5vh;
+    }
+    #table {
+        width: 100%;
+        transition: all .4s;
+    }
+    #currentplayer {
+        width: 90%;
+        height: 100%;
+    }
+    #currentplayer h4 {
+        font-size: 4vw;
+        margin: auto;
+    }
+    .form-group:nth-child(1) {
+        justify-content: flex-start;
+        width: 79%;
+        margin-right: 1%;
+    }
+    .form-group:nth-child(2) {
+        justify-content: center;
+        padding: 0;
+        width: 20%;
+        /* border: 10px solid white; */
+    }
+    .form-group:nth-child(1)>* {
+        /* border: 2px solid greenyellow; */
+        width: 100%;
+    }
+    .form-group>label {
+        display: flex;
+    }
+    .form-group>div {
+        width: 100%;
+        padding: 0;
+    }
+    .form-group>label>div {
+        margin-left: 3vw;
+    }
+    .form-group button {
+        min-width: 100%;
+        max-width: fit-content;
+    }
+    .form-group button:nth-child(1) {
+        margin-bottom: 1.3vh;
+    }
+}
+
+@media all and (max-height: 1000px) and (max-width: 700px) {
+    * {
+        transition: all .4s;
+        margin: 0;
+        padding: 0;
+    }
+    #button-4 {
+        border: 1px solid white;
+        margin-top: 7vh;
+        padding: auto;
+        display: flex;
+        padding: 0;
+    }
+    #button-4 button {
+        /* border: 3px solid yellow; */
+        padding: 0 2% 0 2%;
+        margin: auto;
+        min-height: 8vh;
+    }
+}
