@@ -1,9 +1,12 @@
 const ref = firebase.database().ref('Game');
-
+const table = document.querySelector(`#table`);
+// let rotateVal = 0;
 const logoutItems = document.querySelectorAll('.logged-out');
 const loginItems = document.querySelectorAll('.logged-in');
 const refScore = firebase.database().ref("score")
-
+const refrotate = firebase.database().ref("rotates");
+const ref_userdata = firebase.database().ref('UserData');
+const user = firebase.auth().currentUser
 refScore.on("value", snapshot => {
     data = snapshot.val()
     const currentUser = firebase.auth().currentUser
@@ -21,7 +24,24 @@ refScore.on("value", snapshot => {
 })
 
 function setupUI(user) {
+    
     if (user) {
+        ref_userdata.once('value' , snapshot => {
+            if(snapshot.child(user.uid).exists()){
+                document.querySelector('#user-profile-name').innerHTML = user.email + " Score : " + snapshot.child(user.uid).child('Score').val() +"";
+                ref_userdata.child(user.uid).update({
+                    ['Name']: user.email,
+                });
+            }else{
+                ref_userdata.child(user.uid).update({
+                    ['Score']:0,
+                });
+                document.querySelector('#user-profile-name').innerHTML = user.email +" (0)";
+                location.reload()
+                location.reload()
+            }
+            user_uid = user.uid;
+        });
         document.querySelector("#user-profile-name").innerHTML = user.email
         loginItems.forEach(item => item.style.display = 'inline-block');
         logoutItems.forEach(item => item.style.display = 'none');
@@ -358,6 +378,92 @@ let col3full = 6
 let col2full = 6
 let col1full = 6
 
+
+
+
+
+
+// function turnLeft() {
+//     // rotateVal -= 90;
+//     // console.log(rotateVal)
+//     // table.style.cssText = `transform: rotateZ(${rotateVal}deg);`
+//     changeID(`turnleft`);
+//     // show.innerText = `left rotateVal= ${rotateVal}`;
+//     allGravity();
+//     refrotate.once("data")
+// }
+
+// function turnRight() {
+//     // rotateVal += 90;
+//     // console.log(rotateVal)
+//     // table.style.cssText = `transform: rotateZ(${rotateVal}deg);`
+//     changeID(`turnright`);
+//     // show.innerText = `right rotateVal= ${rotateVal}`;
+//     allGravity();
+// }
+
+// const boxes = document.querySelectorAll(`.table-col`)
+
+// function gravity(id) {
+//     // let rowCurrent = id.charAt(4);
+//     let colCurrent = id.charAt(10);
+//     let checkRow5 = document.querySelector(`#row-5-col-${colCurrent} p`).innerText
+//     let checkRow4 = document.querySelector(`#row-4-col-${colCurrent} p`).innerText
+//     let checkRow3 = document.querySelector(`#row-3-col-${colCurrent} p`).innerText
+//     let checkRow2 = document.querySelector(`#row-2-col-${colCurrent} p`).innerText
+//     let checkRow1 = document.querySelector(`#row-1-col-${colCurrent} p`).innerText
+//     console.log(checkRow5);
+//     if (checkRow5 != 'X' && checkRow5 != 'O') {
+//         id = `row-5-col-${colCurrent}`;
+//     } else if (checkRow4 != 'X' && checkRow4 != 'O') {
+//         id = `row-4-col-${colCurrent}`;
+//     } else if (checkRow3 != 'X' && checkRow3 != 'O') {
+//         id = `row-3-col-${colCurrent}`;
+//     } else if (checkRow2 != 'X' && checkRow2 != 'O') {
+//         id = `row-2-col-${colCurrent}`;
+//     } else if (checkRow1 != 'X' && checkRow1 != 'O') {
+//         id = `row-1-col-${colCurrent}`;
+//     }
+//     return id;
+// }
+
+// function changeID(rotateDirection) {
+//     for (let row = 1; row < 6; row++) {
+//         for (let col = 1; col < 6; col++) {
+//             box = document.querySelector(`#row-${row}-col-${col}`);
+//             if (rotateDirection == `turnleft`) {
+//                 rowChange = 6 - col;
+//                 colChange = row;
+//             } else if (rotateDirection == `turnright`) {
+//                 rowChange = col;
+//                 colChange = 6 - row;
+//             }
+//             box.id = `new-row-${rowChange}-col-${colChange}`
+//         }
+//     }
+//     for (let row = 1; row < 6; row++) {
+//         for (let col = 1; col < 6; col++) {
+//             box = document.querySelector(`#new-row-${row}-col-${col}`);
+//             box.id = box.id.slice(4);
+//             // box.firstElementChild.innerText = box.id;
+//         }
+//     }
+// }
+
+// function allGravity() {
+//     for (let row = 5; row > 0; row--) {
+//         for (let col = 1; col < 6; col++) {
+//             box = document.querySelector(`#row-${row}-col-${col}`);
+//             boxID = box.id;
+//             marker = box.firstElementChild.innerText;
+//             if (marker == `X` || marker == `O`) {
+//                 boxGravity = document.querySelector(`#${gravity(boxID)}`);
+//                 boxGravity.firstElementChild.innerText = marker;
+//                 box.firstElementChild.innerText = ``;
+//             }
+//         }
+//     }
+// }
 // add condition connect 4
 function Game_play(event) {
     ref.child(roomid).once("value", snapshot => {
@@ -368,31 +474,6 @@ function Game_play(event) {
         let colCurrent = id.charAt(10)
         console.log(`row`+rowCurrent)
         console.log(`col`+colCurrent)
-        
-        //row5-col4
-        // if (rowCurrent = '5' && colCurrent == '5' && col5full == 6){
-        //     col5full = 5;
-        //     console.log(col5full)
-        //     id = `row-${col5full}-col-5`
-        // }else if (rowCurrent < '5' && colCurrent == '5' && col5full == 6){
-        //     col5full = 5;
-        //     console.log(col5full)
-        //     id = `row-${col5full}-col-5`
-        // }else if (rowCurrent < '5' && colCurrent == '5' && col5full == 5){
-        //     col5full = 4;
-        //     console.log(col5full)
-        //     id = `row-${col5full}-col-5`
-        // }else if (rowCurrent < '5' && colCurrent == '5' && col5full == 4){
-        //     col5full = 3;
-        //     console.log(col5full)
-        //     id = `row-${col5full}-col-5`
-        // }else if (rowCurrent < '5' && colCurrent == '5' && col5full == 2){
-        //     col5full = 1;
-        //     console.log(col5full)
-        //     id = `row-${col5full}-col-5`
-        // }else{
-        
-        // }
         let checkRow5 = document.querySelector(`#row-5-col-${colCurrent} p`).innerText
         let checkRow4 = document.querySelector(`#row-4-col-${colCurrent} p`).innerText
         let checkRow3 = document.querySelector(`#row-3-col-${colCurrent} p`).innerText
@@ -510,23 +591,32 @@ function final() {
                     winner: turn
                 })
                 id = data[`user-${turn.toLowerCase()}-id`]
-                refScore.once("value", snapshot => {
-                    scores = snapshot.val()
-                    if (!scores || !scores[id]) {
-                        refScore.update({
-                            [id]: 1
-                        })
-                        changeyellow()
-                    }
-                    else {
-                        score = scores[id]
-                        refScore.update({
-                            [id]: parseInt(score) + 1
-                        })
-                        changeyellow()
-                    }
+                console.log(id)
+                console.log('===||==========>')
+                // console.log(user.email)
+                ref_userdata.once('value', snapshot =>{
+                    const usertype = snapshot.val();
+                    Object.keys(usertype).forEach(key=>{
+                        console.log('key = '+key)
+                        if (key == id){
+                            var user_score_4 = snapshot.child(id).child('Score').val() + 1;
+                            ref_userdata.child(id).update({
+                                ['Score']: user_score_4,
+                            });
+                        }
+                    })
                 })
-                return
+                changeyellow()
+                    // ref_userdata.once('value', userData => {
+                    //     var user_score_4 = userData.child(user.uid).child('Score').val() + 1;
+                    //     ref_userdata.child(user.uid).update({
+                    //         ['Score']: user_score_4,
+                    //     });
+                    //     document.querySelector('#user-profile-name').innerHTML = user.displayName + " Score : " +  user_score_4 ;
+                    // });
+                
+                
+               
             }
             if (data["tables"]["row-1-col-1"] && data["tables"]["row-1-col-2"] && data["tables"]["row-1-col-3"] && data["tables"]["row-1-col-4"] && data["tables"]["row-1-col-5"] &&
             data["tables"]["row-2-col-1"] && data["tables"]["row-2-col-2"] && data["tables"]["row-2-col-3"] && data["tables"]["row-2-col-4"] && data["tables"]["row-2-col-5"] &&
@@ -537,34 +627,6 @@ function final() {
                 ref.child(roomid).update({
                     status: "finish",
                     winner: "draw"
-                })
-                id1 = data[`user-x-id`]
-                id2 = data[`user-o-id`]
-                refScore.once("value", snapshot => {
-                    scores = snapshot.val()
-                    if (!scores || !scores[id1]) {
-                        refScore.update({
-                            [id1]: 0
-                        })
-                    }
-                    else {
-                        score = scores[id1]
-                        refScore.update({
-                            [id1]: parseInt(score) + 0
-                        })
-                    }
-                    if (!scores || !scores[id2]) {
-                        refScore.update({
-                            [id2]: 0
-                        })
-                    }
-                    else {
-                        score = scores[id2]
-                        refScore.update({
-                            [id2]: parseInt(score) + 0
-                        })
-                    }
-                    return
                 })
             }
         }
@@ -625,3 +687,30 @@ function offwin(){
     document.getElementById("wino-text").style.display = "none";
     stopgame();
 }
+
+function showscore(){
+    //  refScore.once("value", function(snapshot){
+    //     // var data = snapshot.val();
+    //     // for (let i in data){
+    //     //     console.log(data[i])
+    //     // }
+    //     snapshot.forEach(function(element){
+    //         document.querySelector('#root').innerHTML +=`<div>${element.val()}</div`
+    //     });
+    // })
+//     refScore.on("value", function(snapshot) {
+
+//         snapshot.forEach(function(childSnapshot) {
+//           var item_id = childSnapshot.name();
+//           var qty = childSnapshot.val();
+      
+//               refMenu.child(item_id).once("value", function(snapshot) {
+//                 var item = snapshot.val()
+//                 console.log(item.name +' '+ item.price)
+//               });
+      
+//        });
+      
+//       });
+ }
+

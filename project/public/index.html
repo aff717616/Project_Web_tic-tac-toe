@@ -35,7 +35,7 @@
                 <input type="password" name="password" id="input-password-login" class="sign-input form-control" aria-label="title" aria-describedby="basic-addon1" required>
 
                 <!-- <input type="submit" value="Sign in" id="signIn-submit" class="sign-submit" onclick="goToMenuPage()"> -->
-                <button type="submit" class="sign-submit">Sign in</button>
+                <button type="submit" class="sign-submit" onclick="showscore()">Sign in</button>
             </form>
             <p id="feedback-msg-login" class="feedback-sign"></p>
         </div>
@@ -104,6 +104,7 @@
                 data-bs-target="#modal-join" ></i>
             </div>
         </div>
+        <div id="root"></div>
     </div>
 
     <div id="victoryx-text" class="overlay-text" onclick="off()">
@@ -149,7 +150,9 @@
                 <button type="button" id="btnmenugame" class="btn btn-primary" onclick="goToMenuPage()">MENU</button>
             </div>
 
-
+            <div class="left">
+                <button class="turn-left btn-info" onclick="turnLeft()">TurnLeft</button>
+            </div>
             <div id="table" class="container">
                 <div class="row" id="row-1">
                     <div class="col d-flex justify-content-center align-items-center table-col tabel_border" id="row-1-col-1">
@@ -236,6 +239,9 @@
                         <p class="display-1"></p>
                     </div>
                 </div>
+            </div>
+            <div class="right">
+                <button class="turn-right btn-info" onclick="turnRight()">หมุนขวา</button>
             </div>
             <div class="container" id="currentplayer">
                 <div class="container d-flex justify-content-center">
