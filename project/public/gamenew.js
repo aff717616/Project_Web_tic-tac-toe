@@ -1,3 +1,4 @@
+let num = 1;
 const ref = firebase.database().ref('Game');
 const table = document.querySelector(`#table`);
 // let rotateVal = 0;
@@ -10,19 +11,12 @@ const user = firebase.auth().currentUser
 refScore.on("value", snapshot => {
     data = snapshot.val()
     const currentUser = firebase.auth().currentUser
-
-    console.log(currentUser.email);
     console.log(currentUser);
-    if (currentUser) {
-        if (data[currentUser.uid]) {
-            document.getElementById("scoreplayer").innerHTML = `(${data[currentUser.uid]})`
-        }
-        else {
-            document.getElementById("scoreplayer").innerHTML = "(0)"
-        }
-    }
 })
 
+if (document.querySelector('#user-profile-name').innerHTML !=''){
+    goToMenuPage();
+}
 function setupUI(user) {
     
     if (user) {
@@ -713,4 +707,57 @@ function showscore(){
       
 //       });
  }
+ function calluserboard(){
+ ref_userdata.on("value", (data) => {
+    ReadList(data);
+});
+ }
+
+ function ReadList(snapshot) {
+    
+     document.getElementById("name-list").innerHTML = ``;
+     snapshot.forEach((data) => {
+         const id = data.key;
+         const Name = data.val().Name;
+         const Score = data.val().Score;
+         document.getElementById('leader_body').innerHTML += `<tr id="${id}"><td>${Name}</td><td>${Score}</td></tr>`
+         num++;
+     });
+     sortTable()
+ }
+ function sortTable() {
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("leader_board");
+    switching = true;
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[1];
+        y = rows[i + 1].getElementsByTagName("TD")[1];
+        // Check if the two rows should switch place:
+        if (Number(x.innerHTML) < Number(y.innerHTML)) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+      }
+    }
+  }
+ 
 

@@ -218,3 +218,25 @@ nav .back-icon {
 .tutorial-body {
     height: 45vh;
 }
+.person {
+    text-align: center;
+    font-size: 3vw;
+    background-color: aliceblue;
+    border-radius: 5px;
+    height: 15vw;
+}
+
+.header-board {
+    color: white;
+    background-color: #847295;
+    border-radius: 5px;
+
+}
+
+/* .header-board-bot {
+    color: white;
+} */
+
+/* #name-list {
+    border-radius: 20px;
+} */
