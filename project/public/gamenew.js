@@ -14,23 +14,23 @@ refScore.on("value", snapshot => {
     console.log(currentUser);
 })
 
-if (document.querySelector('#user-profile-name').innerHTML !=''){
+if (document.querySelector('#user-profile-name').innerHTML != '') {
     goToMenuPage();
 }
 function setupUI(user) {
-    
+
     if (user) {
-        ref_userdata.once('value' , snapshot => {
-            if(snapshot.child(user.uid).exists()){
-                document.querySelector('#user-profile-name').innerHTML = user.email + " Score : " + snapshot.child(user.uid).child('Score').val() +"";
+        ref_userdata.once('value', snapshot => {
+            if (snapshot.child(user.uid).exists()) {
+                document.querySelector('#user-profile-name').innerHTML = user.email + " Score : " + snapshot.child(user.uid).child('Score').val() + "";
                 ref_userdata.child(user.uid).update({
                     ['Name']: user.email,
                 });
-            }else{
+            } else {
                 ref_userdata.child(user.uid).update({
-                    ['Score']:0,
+                    ['Score']: 0,
                 });
-                document.querySelector('#user-profile-name').innerHTML = user.email +" (0)";
+                document.querySelector('#user-profile-name').innerHTML = user.email + " (0)";
                 location.reload()
                 location.reload()
             }
@@ -69,42 +69,42 @@ function getGameInfo(snapshot) {
             console.log(key);
             switch (key) {
                 case 'user-x-id':
-                    
-                    if (gameInfos["1 room-id"] == roomid){
-                        
+
+                    if (gameInfos["1 room-id"] == roomid) {
+
                         playerX = gameInfos['user-x-email']
                         console.log('keyyyyyyy');
                         console.log(key);
                         document.getElementById('inputPlayer-x').value = playerX
                         document.querySelector('#btnJoin-x').disabled = true;
                         break
-                    }else{
+                    } else {
                         break
                     }
                 case 'user-o-id':
-                    if (gameInfos["1 room-id"] == roomid){
+                    if (gameInfos["1 room-id"] == roomid) {
                         playerO = gameInfos['user-o-email']
                         console.log('keyyyyyyy');
                         console.log(key);
                         document.getElementById('inputPlayer-o').value = playerO
                         document.querySelector('#btnJoin-o').disabled = true;
                         break
-                    }else{
+                    } else {
                         break
                     }
             }
 
-             if (currentUser.email == gameInfos[key]) {
-                 document.querySelector('#btnJoin-x').disabled = true;
-                 document.querySelector('#btnJoin-o').disabled = true;
-             }
+            //  if (currentUser.email == gameInfos[key]) {
+            //      document.querySelector('#btnJoin-x').disabled = true;
+            //      document.querySelector('#btnJoin-o').disabled = true;
+            //  }
         })
-        if (gameInfos["user-x-email"]=='Empty' && gameInfos["user-o-email"]=='Empty') {
+        if (gameInfos["user-x-email"] == 'Empty' && gameInfos["user-o-email"] == 'Empty') {
         }
         else if (gameInfos["user-x-email"] && gameInfos["user-o-email"]) {
             document.querySelector("#btnStartGame").disabled = false
             document.querySelector("#status-text").innerHTML = "Click START GAME"
-        }  
+        }
         else {
             document.querySelector("#btnStartGame").disabled = true
             document.querySelector("#status-text").innerHTML = "Waiting for players..."
@@ -152,7 +152,7 @@ function getGameInfo(snapshot) {
         else if (gameInfos.winner) {
             document.querySelector("#status-text").innerHTML = `Winner: ${gameInfos.winner}`
         }
-        
+
     });
 }
 
@@ -161,87 +161,89 @@ btnJoins.forEach(btnJoin => btnJoin.addEventListener('click', joinGame))
 
 var roomid = ''
 
-function qjoinroom(){
+function qjoinroom() {
     roomid = '';
+    ref.once('value', snapshot => {
+        snapshot.forEach((data) => {
+
+            var user_1 = data.child('user-o-email').val()
+            var user_2 = data.child('user-x-email').val()
+            var room = data.child('1 room-id').val()
+            var player = [user_1, user_2];
+            if ((user_1 != 'Empty' || user_2 != 'Empty') && player.includes("Empty")) {
+                roomid = room;
+                return;
+            }
+        });
+        document.getElementById('roomId').innerHTML = 'ROOMID: ' + roomid;
         ref.once('value', snapshot => {
-            snapshot.forEach( (data) => {
-        
-                var user_1 = data.child('user-o-email').val()
-                var user_2 = data.child('user-x-email').val()
-                var room = data.child('1 room-id').val()
-                var player = [user_1, user_2];
-                if((user_1 != 'Empty' || user_2 != 'Empty') && player.includes("Empty")){
-                    roomid= room;
-                    return;
+            const gameInfos = snapshot.val();
+            Object.keys(gameInfos).forEach(key => {
+                if (key == roomid) {
+                    ref.once('value', snapshot => {
+                        getGameInfo(snapshot);
+                    });
+                    var user = firebase.auth().currentUser;
+                    setupUI(user)
+                    goToGamePage()
+
                 }
             });
-            ref.once('value' , snapshot => {
-                const gameInfos = snapshot.val();
-                Object.keys(gameInfos).forEach(key => {
-                                if(key == roomid){
-                                    ref.once('value' , snapshot => {
-                                        getGameInfo(snapshot);
-                                        });
-                                        var user = firebase.auth().currentUser;
-                                        setupUI(user)
-                                        goToGamePage()
-                                        
-                                }
-                    });
-            });
         });
-        
-    
-    if(roomid == ''){
+    });
+
+
+    if (roomid == '') {
         alert("Room not Found");
-    }else{
+    } else {
         alert("Join room");
         document.querySelector('#room-text').innerHTML = roomid;
-        
+
     }
-    
+
 }
-function joinroom(){
+function joinroom() {
     var room_id = '';
     room_id = document.getElementById('input-room-id').value;
-    
-    if(room_id == ''){
+
+    if (room_id == '') {
         joinFeedback.style = `color:crimson`;
         joinFeedback.innerText = `Please insert Code`;
-        
-    }else if(room_id.length != 5){
+
+    } else if (room_id.length != 5) {
         joinFeedback.style = `color:crimson`;
         joinFeedback.innerText = `invalid Code`;
 
-    }else{
-        roomid= room_id;
-        ref.once('value' , snapshot => {
+    } else {
+        roomid = room_id;
+        ref.once('value', snapshot => {
             var time = 0;
             const gameInfos = snapshot.val();
             try {
-                    Object.keys(gameInfos).forEach(key => {
-                            if(key == roomid){
-                                ref.once('value' , snapshot => {
-                                    getGameInfo(snapshot);
-                                    });
-                                    var user = firebase.auth().currentUser;
-                                    document.querySelector('#room-text').innerHTML = roomid;
-                                    setupUI(user)
-                                    showcreate()
-                                    joinFeedback.style = `color:green`;
-                                    joinFeedback.innerText = `joined room`;
-                                    time ++;
-                                    throw 'Break';
-                            }
-                            else{
-                            time ++;
-                                joinFeedback.style = `color:crimson`;
-                                joinFeedback.innerText = `room not found`;
-                                }
+                Object.keys(gameInfos).forEach(key => {
+                    if (key == roomid) {
+                        ref.once('value', snapshot => {
+                            getGameInfo(snapshot);
+                        });
+                        var user = firebase.auth().currentUser;
+                        document.querySelector('#room-text').innerHTML = roomid;
+                        setupUI(user)
+                        showcreate()
+                        joinFeedback.style = `color:green`;
+                        joinFeedback.innerText = `joined room`;
+                        time++;
+                        throw 'Break';
+                    }
+                    else {
+                        time++;
+                        joinFeedback.style = `color:crimson`;
+                        joinFeedback.innerText = `room not found`;
+                    }
                 });
-              } catch (e) {
+                document.getElementById('roomId').innerHTML = 'ROOMID: ' + roomid;
+            } catch (e) {
                 if (e !== 'Break') throw e
-              }
+            }
 
         });
     }
@@ -266,45 +268,47 @@ function joinGame(event) {
         }
     }
 }
-function createroom(){
-    var result           = '';
-    var characters       = '0123456789';
+function createroom() {
+    var result = '';
+    var characters = '0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < 5; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * 
- charactersLength));
-   }
-   roomid=result;
-  ref.once('value', snapshot => {
-    snapshot.forEach( (data) => {
-
-        var user_1 = data.child('user-o-email').val()
-        var user_2 = data.child('user-x-email').val()
-        var room = data.child('1 room-id').val()
-        if(user_1 == 'Empty' && user_2 == 'Empty'){
-           ref.child(room).remove()
-        }
-
-    });
-});
-   ref.once('value' , snapshot => {
-        if(roomid){
-            
-           ref.child(roomid).update({
-            ['user-o-email']: 'Empty',
-            ['user-x-email']: 'Empty',
-            ['1 room-id']: roomid,})
-            getGameInfo(snapshot);
-        }else{
+    for (var i = 0; i < 5; i++) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
     }
+    roomid = result;
+    ref.once('value', snapshot => {
+        snapshot.forEach((data) => {
+
+            var user_1 = data.child('user-o-email').val()
+            var user_2 = data.child('user-x-email').val()
+            var room = data.child('1 room-id').val()
+            if (user_1 == 'Empty' && user_2 == 'Empty') {
+                ref.child(room).remove()
+            }
+
+        });
     });
-   var user = firebase.auth().currentUser;
-//    document.querySelector('#room-text').innerHTML = roomid;
+    document.getElementById('roomId').innerHTML = 'ROOMID: ' + roomid;
+    ref.once('value', snapshot => {
+        if (roomid) {
+
+            ref.child(roomid).update({
+                ['user-o-email']: 'Empty',
+                ['user-x-email']: 'Empty',
+                ['1 room-id']: roomid,
+            })
+            getGameInfo(snapshot);
+        } else {
+        }
+    });
+    var user = firebase.auth().currentUser;
+    //    document.querySelector('#room-text').innerHTML = roomid;
     setupUI(user)
     goToGamePage()
     // showcreate()
-   return result;
-   
+    return result;
+
 }
 
 const btnCancels = document.querySelectorAll(".btn-cancel-join-game");
@@ -344,15 +348,15 @@ btnTerminateGame.addEventListener("click", stopgame);
 btngotomenu.addEventListener("click", off());
 
 function startgame(event) {
-    
-    if (toggle ==0){
-    ref.child(roomid).update({
-        status: "start",
-        turn: "X",
-        tables: ""
-    })
-    toggle = 1;
-    }else if(toggle == 1){
+
+    if (toggle == 0) {
+        ref.child(roomid).update({
+            status: "start",
+            turn: "X",
+            tables: ""
+        })
+        toggle = 1;
+    } else if (toggle == 1) {
         ref.child(roomid).update({
             status: "start",
             turn: "O",
@@ -381,42 +385,42 @@ function Game_play(event) {
         id = event.currentTarget.id
         let rowCurrent = id.charAt(4)
         let colCurrent = id.charAt(10)
-        console.log(`row`+rowCurrent)
-        console.log(`col`+colCurrent)
+        console.log(`row` + rowCurrent)
+        console.log(`col` + colCurrent)
         let checkRow5 = document.querySelector(`#row-5-col-${colCurrent} p`).innerText
         let checkRow4 = document.querySelector(`#row-4-col-${colCurrent} p`).innerText
         let checkRow3 = document.querySelector(`#row-3-col-${colCurrent} p`).innerText
         let checkRow2 = document.querySelector(`#row-2-col-${colCurrent} p`).innerText
         let checkRow1 = document.querySelector(`#row-1-col-${colCurrent} p`).innerText
         console.log(checkRow5);
-        if(checkRow5 != 'X' && checkRow5 != 'O'){
+        if (checkRow5 != 'X' && checkRow5 != 'O') {
             id = `row-5-col-${colCurrent}`
         }
-        else if(checkRow4 != 'X' && checkRow4 != 'O'){
+        else if (checkRow4 != 'X' && checkRow4 != 'O') {
             id = `row-4-col-${colCurrent}`
         }
-        else if(checkRow3 != 'X' && checkRow3 != 'O'){
+        else if (checkRow3 != 'X' && checkRow3 != 'O') {
             id = `row-3-col-${colCurrent}`
         }
-        else if(checkRow2 != 'X' && checkRow2 != 'O'){
+        else if (checkRow2 != 'X' && checkRow2 != 'O') {
             id = `row-2-col-${colCurrent}`
         }
-        else if(checkRow1 != 'X' && checkRow1 != 'O'){
+        else if (checkRow1 != 'X' && checkRow1 != 'O') {
             id = `row-1-col-${colCurrent}`
         }
         console.log(checkRow5)
         if (data.turn === "X" && data["user-x-email"] === currentUser.email && !data["tables"][id]) {
             ref.child(roomid).child("tables").update({
                 [id]: data.turn
-                
+
             })
             console.log(data.turn)
             ref.child(roomid).update({
                 turn: "O"
             })
-            document.querySelector(".turn-left").disabled  = false;
-            document.querySelector(".turn-right").disabled  = false; 
-            
+            document.querySelector(".turn-left").disabled = false;
+            document.querySelector(".turn-right").disabled = false;
+
         }
         else if (data.turn === "O" && data["user-o-email"] === currentUser.email && !data["tables"][id]) {
             ref.child(roomid).child("tables").update({
@@ -424,25 +428,25 @@ function Game_play(event) {
             })
             ref.child(roomid).update({
                 turn: "X"
-            }) 
-            document.querySelector(".turn-left").disabled  = false;
-            document.querySelector(".turn-right").disabled  = false;
+            })
+            document.querySelector(".turn-left").disabled = false;
+            document.querySelector(".turn-right").disabled = false;
         }
     })
-    
+
 }
 
 function final() {
-    setTimeout(function(){
+    setTimeout(function () {
         ref.child(roomid).once("value", snapshot => {
             data = snapshot.val()
             currentUser = firebase.auth().currentUser
             turns = ["X", "O"]
-    
+
             if (data.winner) {
                 return
             }
-    
+
             for (const turn of turns) {
                 num1 = data["tables"]["row-1-col-1"] == turn && data["tables"]["row-1-col-2"] == turn && data["tables"]["row-1-col-3"] == turn
                 num2 = data["tables"]["row-2-col-1"] == turn && data["tables"]["row-2-col-2"] == turn && data["tables"]["row-2-col-3"] == turn
@@ -482,27 +486,27 @@ function final() {
                 num34 = data["tables"]["row-1-col-3"] == turn && data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-1"] == turn
                 num35 = data["tables"]["row-1-col-4"] == turn && data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-2"] == turn
                 num36 = data["tables"]["row-1-col-5"] == turn && data["tables"]["row-2-col-4"] == turn && data["tables"]["row-3-col-3"] == turn
-    
+
                 num37 = data["tables"]["row-2-col-1"] == turn && data["tables"]["row-3-col-2"] == turn && data["tables"]["row-4-col-3"] == turn
                 num38 = data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-4"] == turn
                 num39 = data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-4"] == turn && data["tables"]["row-4-col-5"] == turn
                 num40 = data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-2"] == turn && data["tables"]["row-4-col-1"] == turn
                 num41 = data["tables"]["row-2-col-4"] == turn && data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-2"] == turn
                 num42 = data["tables"]["row-2-col-5"] == turn && data["tables"]["row-3-col-4"] == turn && data["tables"]["row-4-col-3"] == turn
-    
+
                 num43 = data["tables"]["row-3-col-1"] == turn && data["tables"]["row-4-col-2"] == turn && data["tables"]["row-5-col-3"] == turn
                 num44 = data["tables"]["row-3-col-2"] == turn && data["tables"]["row-4-col-3"] == turn && data["tables"]["row-5-col-4"] == turn
                 num45 = data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-4"] == turn && data["tables"]["row-5-col-5"] == turn
                 num46 = data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-2"] == turn && data["tables"]["row-5-col-1"] == turn
                 num47 = data["tables"]["row-3-col-4"] == turn && data["tables"]["row-4-col-3"] == turn && data["tables"]["row-5-col-2"] == turn
                 num48 = data["tables"]["row-3-col-5"] == turn && data["tables"]["row-4-col-4"] == turn && data["tables"]["row-5-col-3"] == turn
-                
+
                 if (num1 || num2 || num3 || num4 || num5 || num6 || num7 || num8 || num9 || num10 ||
                     num11 || num12 || num13 || num14 || num15 || num16 || num17 || num18 || num19 || num20 ||
                     num21 || num22 || num23 || num24 || num25 || num26 || num27 || num28 || num29 || num30 ||
                     num31 || num32 || num33 || num34 || num35 || num36 || num37 || num38 || num39 || num40 ||
-                    num41 || num42 || num43 || num44 || num45 || num46 || num47 || num48 ) {
-                        ref.child(roomid).update({
+                    num41 || num42 || num43 || num44 || num45 || num46 || num47 || num48) {
+                    ref.child(roomid).update({
                         status: "finish",
                         winner: turn
                     })
@@ -510,11 +514,11 @@ function final() {
                     console.log(id)
                     console.log('===||==========>')
                     // console.log(user.email)
-                    ref_userdata.once('value', snapshot =>{
+                    ref_userdata.once('value', snapshot => {
                         const usertype = snapshot.val();
-                        Object.keys(usertype).forEach(key=>{
-                            console.log('key = '+key)
-                            if (key == id){
+                        Object.keys(usertype).forEach(key => {
+                            console.log('key = ' + key)
+                            if (key == id) {
                                 var user_score_4 = snapshot.child(id).child('Score').val() + 1;
                                 ref_userdata.child(id).update({
                                     ['Score']: user_score_4,
@@ -523,22 +527,22 @@ function final() {
                         })
                     })
                     changeyellow()
-                        // ref_userdata.once('value', userData => {
-                        //     var user_score_4 = userData.child(user.uid).child('Score').val() + 1;
-                        //     ref_userdata.child(user.uid).update({
-                        //         ['Score']: user_score_4,
-                        //     });
-                        //     document.querySelector('#user-profile-name').innerHTML = user.displayName + " Score : " +  user_score_4 ;
-                        // });
-                    
-                    
-                   
+                    // ref_userdata.once('value', userData => {
+                    //     var user_score_4 = userData.child(user.uid).child('Score').val() + 1;
+                    //     ref_userdata.child(user.uid).update({
+                    //         ['Score']: user_score_4,
+                    //     });
+                    //     document.querySelector('#user-profile-name').innerHTML = user.displayName + " Score : " +  user_score_4 ;
+                    // });
+
+
+
                 }
                 if (data["tables"]["row-1-col-1"] && data["tables"]["row-1-col-2"] && data["tables"]["row-1-col-3"] && data["tables"]["row-1-col-4"] && data["tables"]["row-1-col-5"] &&
-                data["tables"]["row-2-col-1"] && data["tables"]["row-2-col-2"] && data["tables"]["row-2-col-3"] && data["tables"]["row-2-col-4"] && data["tables"]["row-2-col-5"] &&
-                data["tables"]["row-3-col-1"] && data["tables"]["row-3-col-2"] && data["tables"]["row-3-col-3"] && data["tables"]["row-3-col-4"] && data["tables"]["row-3-col-5"] &&
-                data["tables"]["row-4-col-1"] && data["tables"]["row-4-col-2"] && data["tables"]["row-4-col-3"] && data["tables"]["row-4-col-4"] && data["tables"]["row-4-col-5"] &&
-                data["tables"]["row-5-col-1"] && data["tables"]["row-5-col-2"] && data["tables"]["row-5-col-3"] && data["tables"]["row-5-col-4"] && data["tables"]["row-5-col-5"] ){
+                    data["tables"]["row-2-col-1"] && data["tables"]["row-2-col-2"] && data["tables"]["row-2-col-3"] && data["tables"]["row-2-col-4"] && data["tables"]["row-2-col-5"] &&
+                    data["tables"]["row-3-col-1"] && data["tables"]["row-3-col-2"] && data["tables"]["row-3-col-3"] && data["tables"]["row-3-col-4"] && data["tables"]["row-3-col-5"] &&
+                    data["tables"]["row-4-col-1"] && data["tables"]["row-4-col-2"] && data["tables"]["row-4-col-3"] && data["tables"]["row-4-col-4"] && data["tables"]["row-4-col-5"] &&
+                    data["tables"]["row-5-col-1"] && data["tables"]["row-5-col-2"] && data["tables"]["row-5-col-3"] && data["tables"]["row-5-col-4"] && data["tables"]["row-5-col-5"]) {
                     console.log('affdraw')
                     ref.child(roomid).update({
                         status: "finish",
@@ -549,65 +553,65 @@ function final() {
         })
 
     }, 1000)
-   
+
 }
 
-function changeyellow(){
-    if (document.querySelector("#status-text").innerHTML == `Winner: O`){
-        countwino += 1 ;
-        if (countwino == 3){
+function changeyellow() {
+    if (document.querySelector("#status-text").innerHTML == `Winner: O`) {
+        countwino += 1;
+        if (countwino == 3) {
             document.getElementById("victoryo-text").style.display = "block";
-        }else{
-        document.getElementById("wino-text").style.display = "block";
+        } else {
+            document.getElementById("wino-text").style.display = "block";
         }
-    }else if (document.querySelector("#status-text").innerHTML == `Winner: X`){
+    } else if (document.querySelector("#status-text").innerHTML == `Winner: X`) {
         countwinx += 1;
-        if (countwinx == 3){
+        if (countwinx == 3) {
             document.getElementById("victoryx-text").style.display = "block";
-        }else{
-        document.getElementById("winx-text").style.display = "block";
+        } else {
+            document.getElementById("winx-text").style.display = "block";
         }
     }
-    
-    
-    if (countwino == 1){
-        document.getElementById('ofirst').style.color='yellow';
-    }else if (countwino == 2){
-        document.getElementById('osecond').style.color='yellow';
-    }else if (countwino == 3){
-        document.getElementById('othird').style.color='yellow';
-    }if (countwinx == 1){
-        document.getElementById('xfirst').style.color='yellow';
-    }else if (countwinx == 2){
-        document.getElementById('xsecond').style.color='yellow';
-    }else if (countwinx == 3){
-        document.getElementById('xthird').style.color='yellow';
-    }else{
+
+
+    if (countwino == 1) {
+        document.getElementById('ofirst').style.color = 'yellow';
+    } else if (countwino == 2) {
+        document.getElementById('osecond').style.color = 'yellow';
+    } else if (countwino == 3) {
+        document.getElementById('othird').style.color = 'yellow';
+    } if (countwinx == 1) {
+        document.getElementById('xfirst').style.color = 'yellow';
+    } else if (countwinx == 2) {
+        document.getElementById('xsecond').style.color = 'yellow';
+    } else if (countwinx == 3) {
+        document.getElementById('xthird').style.color = 'yellow';
+    } else {
         countwinx = 0
         countwino = 0
     }
 }
-function off(){
+function off() {
     document.getElementById("victoryx-text").style.display = "none";
     document.getElementById("victoryo-text").style.display = "none";
     countwinx = 0
     countwino = 0
-    document.getElementById('xfirst').style.color='white';
-    document.getElementById('xsecond').style.color='white';
-    document.getElementById('xthird').style.color='white';
-    document.getElementById('ofirst').style.color='white';
-    document.getElementById('osecond').style.color='white';
-    document.getElementById('othird').style.color='white';
+    document.getElementById('xfirst').style.color = 'white';
+    document.getElementById('xsecond').style.color = 'white';
+    document.getElementById('xthird').style.color = 'white';
+    document.getElementById('ofirst').style.color = 'white';
+    document.getElementById('osecond').style.color = 'white';
+    document.getElementById('othird').style.color = 'white';
     stopgame();
 }
 
-function offwin(){
+function offwin() {
     document.getElementById("winx-text").style.display = "none";
     document.getElementById("wino-text").style.display = "none";
     stopgame();
 }
 
-function showscore(){
+function showscore() {
     //  refScore.once("value", function(snapshot){
     //     // var data = snapshot.val();
     //     // for (let i in data){
@@ -617,72 +621,72 @@ function showscore(){
     //         document.querySelector('#root').innerHTML +=`<div>${element.val()}</div`
     //     });
     // })
-//     refScore.on("value", function(snapshot) {
+    //     refScore.on("value", function(snapshot) {
 
-//         snapshot.forEach(function(childSnapshot) {
-//           var item_id = childSnapshot.name();
-//           var qty = childSnapshot.val();
-      
-//               refMenu.child(item_id).once("value", function(snapshot) {
-//                 var item = snapshot.val()
-//                 console.log(item.name +' '+ item.price)
-//               });
-      
-//        });
-      
-//       });
- }
- function calluserboard(){
- ref_userdata.on("value", (data) => {
-    ReadList(data);
-});
- }
+    //         snapshot.forEach(function(childSnapshot) {
+    //           var item_id = childSnapshot.name();
+    //           var qty = childSnapshot.val();
 
- function ReadList(snapshot) {
-    
-     document.getElementById("name-list").innerHTML = ``;
-     snapshot.forEach((data) => {
-         const id = data.key;
-         const Name = data.val().Name;
-         const Score = data.val().Score;
-         document.getElementById('leader_body').innerHTML += `<tr id="${id}"><td>${Name}</td><td>${Score}</td></tr>`
-         num++;
-     });
-     sortTable()
- }
- function sortTable() {
+    //               refMenu.child(item_id).once("value", function(snapshot) {
+    //                 var item = snapshot.val()
+    //                 console.log(item.name +' '+ item.price)
+    //               });
+
+    //        });
+
+    //       });
+}
+function calluserboard() {
+    ref_userdata.on("value", (data) => {
+        ReadList(data);
+    });
+}
+
+function ReadList(snapshot) {
+
+    document.getElementById("name-list").innerHTML = ``;
+    snapshot.forEach((data) => {
+        const id = data.key;
+        const Name = data.val().Name;
+        const Score = data.val().Score;
+        document.getElementById('leader_body').innerHTML += `<tr id="${id}"><td>${Name}</td><td>${Score}</td></tr>`
+        num++;
+    });
+    sortTable()
+}
+function sortTable() {
     var table, rows, switching, i, x, y, shouldSwitch;
     table = document.getElementById("leader_board");
     switching = true;
     /* Make a loop that will continue until
     no switching has been done: */
     while (switching) {
-      // Start by saying: no switching is done:
-      switching = false;
-      rows = table.rows;
-      /* Loop through all table rows (except the
-      first, which contains table headers): */
-      for (i = 1; i < (rows.length - 1); i++) {
-        // Start by saying there should be no switching:
-        shouldSwitch = false;
-        /* Get the two elements you want to compare,
-        one from current row and one from the next: */
-        x = rows[i].getElementsByTagName("TD")[1];
-        y = rows[i + 1].getElementsByTagName("TD")[1];
-        // Check if the two rows should switch place:
-        if (Number(x.innerHTML) < Number(y.innerHTML)) {
-          // If so, mark as a switch and break the loop:
-          shouldSwitch = true;
-          break;
+        // Start by saying: no switching is done:
+        switching = false;
+        rows = table.rows;
+        /* Loop through all table rows (except the
+        first, which contains table headers): */
+        for (i = 1; i < (rows.length - 1); i++) {
+            // Start by saying there should be no switching:
+            shouldSwitch = false;
+            /* Get the two elements you want to compare,
+            one from current row and one from the next: */
+            x = rows[i].getElementsByTagName("TD")[1];
+            y = rows[i + 1].getElementsByTagName("TD")[1];
+            // Check if the two rows should switch place:
+            if (Number(x.innerHTML) < Number(y.innerHTML)) {
+                // If so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+            }
         }
-      }
-      if (shouldSwitch) {
-        /* If a switch has been marked, make the switch
-        and mark that a switch has been done: */
-        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-        switching = true;
-      }
+        if (shouldSwitch) {
+            /* If a switch has been marked, make the switch
+            and mark that a switch has been done: */
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+        }
     }
-  }
- 
+}
+
 
