@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+.container-fluid {
+    /* border: 3px solid red; */
+    position: relative;
+    /* padding: 0; */
+}
+
 #user-profile-name {
     padding-right: 1vw;
 }
@@ -77,15 +83,24 @@ nav {
     margin: auto;
 }
 
+
+/* #game-page>div {
+    border: 3px solid yellow;
+    padding-left: 0;
+} */
+
 #table {
-    /* background-color: pink; */
-    height: fit-content;
+    height: 60vh;
+    width: 40vw;
+    max-width: 60vh;
+    /* border: 3px solid red; */
+    margin-top: 5vh;
+    margin-bottom: 5vh;
 }
 
 #table .row {
-    min-height: 12vh;
-    max-height: fit-content;
-    background-color: rgb(255, 255, 255);
+    min-height: 8vh;
+    min-height: 20%;
 }
 
 #table .row .col {
@@ -126,19 +141,21 @@ p.display-1 {
     font-size: 10vw;
 }
 
-#tutorial {
+
+/* #tutorial {
     border: 3px solid yellow;
-}
+} */
 
 #tutorial .modal-dialog {
-    border: 3px solid red;
+    /* border: 3px solid red; */
     top: 25%;
     height: 50%;
 }
 
-#tutorial .modal-dialog #carouselExampleControls {
+
+/* #tutorial .modal-dialog #carouselExampleControls {
     border: 3px solid orange;
-}
+} */
 
 @media all and (max-width: 700px) {
     * {
@@ -238,4 +255,41 @@ p.display-1 {
         margin: auto;
         min-height: 8vh;
     }
+}
+
+#score-page {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 7vw;
+    padding-right: 7vw;
+    /* border: 3px solid red; */
+}
+
+#score-page .header-board {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    margin-bottom: 1vh;
+}
+
+.left {
+    margin: 0;
+    margin-top: 2vh;
+}
+
+.left,
+.right {
+    display: flex;
+    flex-wrap: nowrap;
+    min-width: fit-content;
+    /* width: 100px; */
+}
+
+.left *,
+.right * {
+    border-radius: 30px;
+    border-style: none;
+    padding: 5% 15% 5% 15%;
+    background-color: rgb(210, 164, 254);
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

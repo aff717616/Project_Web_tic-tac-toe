@@ -1,4 +1,5 @@
 const table2 = document.querySelector(`#table`);
+// const row2 = document.querySelector(`#table .row`);
 // const show = document.querySelector(`#show`);
 let rotateVal = 0;
 
@@ -8,6 +9,7 @@ function turnLeft() {
     changeID(`turnleft`);
     // show.innerText = `left rotateVal= ${rotateVal}`;
     allGravity();
+    TableWidthHeightToggle();
 }
 
 function turnRight() {
@@ -16,6 +18,18 @@ function turnRight() {
     changeID(`turnright`);
     // show.innerText = `right rotateVal= ${rotateVal}`;
     allGravity();
+    TableWidthHeightToggle();
+}
+
+function TableWidthHeightToggle() {
+    tableWidth = table2.offsetWidth;
+    // tableHeight = table2.offsetHeight;
+    console.log(tableWidth, typeof(tableWidth));
+    // console.log(tableHeight);
+    // table2.style.width = `${tableHeight}px`;
+    table2.style.height = `${tableWidth}px`;
+    // console.log('table height' = tableHeight);
+    // table2.style.width = `${tableHeight}px`;
 }
 
 function gravity(id) {
@@ -106,35 +120,35 @@ function allGravity() {
                     if (listMarkerCol1[0] == undefined) { listMarkerCol1[0] = `` }
                     boxText.innerText = listMarkerCol1[0];
                     // boxText = '1';
-                    console.log(listMarkerCol1[0]);
+                    // console.log(listMarkerCol1[0]);
                     listMarkerCol1.shift();
                     break;
                 case 2:
                     if (listMarkerCol2[0] == undefined) { listMarkerCol2[0] = `` }
                     boxText.innerText = listMarkerCol2[0];
                     // boxText = '2';
-                    console.log(listMarkerCol2[0]);
+                    // console.log(listMarkerCol2[0]);
                     listMarkerCol2.shift();
                     break;
                 case 3:
                     if (listMarkerCol3[0] == undefined) { listMarkerCol3[0] = `` }
                     boxText.innerText = listMarkerCol3[0]
                         // boxText = '3';
-                    console.log(listMarkerCol3[0]);
+                        // console.log(listMarkerCol3[0]);
                     listMarkerCol3.shift();
                     break;
                 case 4:
                     if (listMarkerCol4[0] == undefined) { listMarkerCol4[0] = `` }
                     boxText.innerText = listMarkerCol4[0]
                         // boxText = '4';
-                    console.log(listMarkerCol4[0]);
+                        // console.log(listMarkerCol4[0]);
                     listMarkerCol4.shift();
                     break;
                 case 5:
                     if (listMarkerCol5[0] == undefined) { listMarkerCol5[0] = `` }
                     boxText.innerText = listMarkerCol5[0]
                         // boxText = '5';
-                    console.log(listMarkerCol5[0]);
+                        // console.log(listMarkerCol5[0]);
                     listMarkerCol5.shift();
             }
         }

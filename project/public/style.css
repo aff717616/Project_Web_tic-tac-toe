@@ -1,11 +1,5 @@
 :root {
-    --gradient: linear-gradient(30deg,
-            #7631a1,
-            #5f1ac0,
-            #5518d9,
-            #4e40f0,
-            #5372fc,
-            #65d6ff);
+    --gradient: linear-gradient(30deg, #7631a1, #5f1ac0, #5518d9, #4e40f0, #5372fc, #65d6ff);
 }
 
 html,
@@ -22,12 +16,10 @@ body {
     0% {
         background-position: left;
     }
-
     100% {
         background-position: right;
     }
 }
-
 
 .content-2 {
     display: flex;
@@ -122,7 +114,6 @@ box-sizing: border-box; */
     display: none;
 }
 
-
 nav {
     position: fixed;
     width: 100%;
@@ -144,12 +135,7 @@ nav .back-icon {
     }
 }
 
-
-
 #table {
-    height: 60vh;
-    width: 40vw;
-    margin-top: 2vh;
     background-color: white;
     transition: all 1s;
 }
@@ -218,6 +204,7 @@ nav .back-icon {
 .tutorial-body {
     height: 45vh;
 }
+
 .person {
     text-align: center;
     font-size: 3vw;
@@ -230,13 +217,13 @@ nav .back-icon {
     color: white;
     background-color: #847295;
     border-radius: 5px;
-
 }
 
 
 /* .header-board-bot {
     color: white;
 } */
+
 
 /* #name-list {
     border-radius: 20px;
