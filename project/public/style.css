@@ -151,7 +151,7 @@ nav .back-icon {
     width: 40vw;
     margin-top: 2vh;
     background-color: white;
-
+    transition: all 1s;
 }
 
 .tabel_border {
@@ -232,6 +232,7 @@ nav .back-icon {
     border-radius: 5px;
 
 }
+
 
 /* .header-board-bot {
     color: white;
