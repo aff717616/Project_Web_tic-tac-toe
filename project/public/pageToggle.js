@@ -20,9 +20,7 @@ function goToSignInPage() {
     menuPage.style.display = `none`;
     gamepage.style.display = `none`;
     scorepage.style.display = `none`;   
-    if (document.querySelector('#user-profile-name').innerText !=''){
-        goToMenuPage()
-    }
+    wantlogout()
     
 }
 
@@ -61,4 +59,13 @@ function gotoScoreboard() {
 if (allway = 1){
     calluserboard()
 }
+function wantlogout(){
+    setTimeout(function(){
+        if (document.querySelector('#user-profile-name').innerText !=''){
+            goToMenuPage()
+        }
+    }, 1000)
+   
+}
+
 goToSignInPage()

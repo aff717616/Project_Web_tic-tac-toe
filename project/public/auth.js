@@ -36,6 +36,7 @@ btnLogout.addEventListener('click', () => {
     console.log('logout complete');
     //oom add
     resetSignInput()
+    document.querySelector('#user-profile-name').innerText ='';
     goToSignInPage()
         //end
 })
