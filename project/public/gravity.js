@@ -79,6 +79,7 @@ function changeID(rotateDirection) {
 }
 
 function allGravity() {
+    
     listMarker = keepMarker();
     listMarkerCol1 = [];
     listMarkerCol2 = [];
@@ -153,6 +154,8 @@ function allGravity() {
             }
         }
     }
+    
+    gotodatabase()
 }
 
 function toggleIDnoRotate(rotateDirection) {
@@ -185,4 +188,29 @@ function keepMarker() {
         }
     }
     return listMarker;
+}
+function gotodatabase(){
+    
+    for (let row = 1; row < 6; row++) {
+        for (let col = 1; col < 6; col++) {
+            box = document.querySelector(`#row-${row}-col-${col}`);
+            marker = box.firstElementChild.innerText
+            console.log(document.querySelector(`#row-${row}-col-${col}`).firstElementChild.innerText + '/1')
+            // ref.child(roomid).child("tables").child(`row-${row}-col-${col}`).remove()
+            console.log(document.querySelector(`#row-${row}-col-${col}`).firstElementChild.innerText + '/2')
+            ref.child(roomid).child("tables").update({
+                [box.id]: marker  
+            })
+            console.log(document.querySelector(`#row-${row}-col-${col}`).firstElementChild.innerText +'/3')
+            
+        }
+    }
+}
+function deletena(){
+    for (let row = 1; row < 6; row++) {
+        for (let col = 1; col < 6; col++) {
+            console.log('delete row = '+row+'col = '+col)
+            
+        }
+    }
 }
