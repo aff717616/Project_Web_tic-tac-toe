@@ -155,7 +155,17 @@ function allGravity() {
         }
     }
     
-    gotodatabase()
+    listMarker2 = keepMarker()
+    for (let row = 1; row < 6; row++) {
+        for (let col = 1; col < 6; col++) {
+            boxID = `row-${row}-col-${col}`;
+            marker = listMarker2[0]
+            ref.child(roomid).child("tables").update({
+                [boxID]: marker
+            })
+            listMarker2.shift();
+        }
+    }
 }
 
 function toggleIDnoRotate(rotateDirection) {
@@ -189,28 +199,28 @@ function keepMarker() {
     }
     return listMarker;
 }
-function gotodatabase(){
+// function gotodatabase(){
     
-    for (let row = 1; row < 6; row++) {
-        for (let col = 1; col < 6; col++) {
-            box = document.querySelector(`#row-${row}-col-${col}`);
-            marker = box.firstElementChild.innerText
-            console.log(document.querySelector(`#row-${row}-col-${col}`).firstElementChild.innerText + '/1')
-            // ref.child(roomid).child("tables").child(`row-${row}-col-${col}`).remove()
-            console.log(document.querySelector(`#row-${row}-col-${col}`).firstElementChild.innerText + '/2')
-            ref.child(roomid).child("tables").update({
-                [box.id]: marker  
-            })
-            console.log(document.querySelector(`#row-${row}-col-${col}`).firstElementChild.innerText +'/3')
+//     for (let row = 1; row < 6; row++) {
+//         for (let col = 1; col < 6; col++) {
+//             box = document.querySelector(`#row-${row}-col-${col}`);
+//             marker = box.firstElementChild.innerText
+//             console.log(document.querySelector(`#row-${row}-col-${col}`).firstElementChild.innerText + '/1')
+//             // ref.child(roomid).child("tables").child(`row-${row}-col-${col}`).remove()
+//             console.log(document.querySelector(`#row-${row}-col-${col}`).firstElementChild.innerText + '/2')
+//             ref.child(roomid).child("tables").update({
+//                 [box.id]: marker  
+//             })
+//             console.log(document.querySelector(`#row-${row}-col-${col}`).firstElementChild.innerText +'/3')
             
-        }
-    }
-}
-function deletena(){
-    for (let row = 1; row < 6; row++) {
-        for (let col = 1; col < 6; col++) {
-            console.log('delete row = '+row+'col = '+col)
+//         }
+//     }
+// }
+// function deletena(){
+//     for (let row = 1; row < 6; row++) {
+//         for (let col = 1; col < 6; col++) {
+//             console.log('delete row = '+row+'col = '+col)
             
-        }
-    }
-}
+//         }
+//     }
+// }

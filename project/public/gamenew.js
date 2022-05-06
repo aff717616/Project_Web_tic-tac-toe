@@ -426,119 +426,123 @@ function Game_play(event) {
 }
 
 function final() {
-    ref.child(roomid).once("value", snapshot => {
-        data = snapshot.val()
-        currentUser = firebase.auth().currentUser
-        turns = ["X", "O"]
-
-        if (data.winner) {
-            return
-        }
-
-        for (const turn of turns) {
-            num1 = data["tables"]["row-1-col-1"] == turn && data["tables"]["row-1-col-2"] == turn && data["tables"]["row-1-col-3"] == turn
-            num2 = data["tables"]["row-2-col-1"] == turn && data["tables"]["row-2-col-2"] == turn && data["tables"]["row-2-col-3"] == turn
-            num3 = data["tables"]["row-3-col-1"] == turn && data["tables"]["row-3-col-2"] == turn && data["tables"]["row-3-col-3"] == turn
-            num4 = data["tables"]["row-4-col-1"] == turn && data["tables"]["row-4-col-2"] == turn && data["tables"]["row-4-col-3"] == turn
-            num5 = data["tables"]["row-5-col-1"] == turn && data["tables"]["row-5-col-2"] == turn && data["tables"]["row-5-col-3"] == turn
-            num6 = data["tables"]["row-1-col-2"] == turn && data["tables"]["row-1-col-3"] == turn && data["tables"]["row-1-col-4"] == turn
-            num7 = data["tables"]["row-2-col-2"] == turn && data["tables"]["row-2-col-3"] == turn && data["tables"]["row-2-col-4"] == turn
-            num8 = data["tables"]["row-3-col-2"] == turn && data["tables"]["row-3-col-3"] == turn && data["tables"]["row-3-col-4"] == turn
-            num9 = data["tables"]["row-4-col-2"] == turn && data["tables"]["row-4-col-3"] == turn && data["tables"]["row-4-col-4"] == turn
-            num10 = data["tables"]["row-5-col-2"] == turn && data["tables"]["row-5-col-3"] == turn && data["tables"]["row-5-col-4"] == turn
-            num11 = data["tables"]["row-1-col-3"] == turn && data["tables"]["row-1-col-4"] == turn && data["tables"]["row-1-col-5"] == turn
-            num12 = data["tables"]["row-2-col-3"] == turn && data["tables"]["row-2-col-4"] == turn && data["tables"]["row-2-col-5"] == turn
-            num13 = data["tables"]["row-3-col-3"] == turn && data["tables"]["row-3-col-4"] == turn && data["tables"]["row-3-col-5"] == turn
-            num14 = data["tables"]["row-4-col-3"] == turn && data["tables"]["row-4-col-4"] == turn && data["tables"]["row-4-col-5"] == turn
-            num15 = data["tables"]["row-5-col-3"] == turn && data["tables"]["row-5-col-4"] == turn && data["tables"]["row-5-col-5"] == turn
-            //ตั้ง
-            num16 = data["tables"]["row-1-col-1"] == turn && data["tables"]["row-2-col-1"] == turn && data["tables"]["row-3-col-1"] == turn
-            num17 = data["tables"]["row-1-col-2"] == turn && data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-2"] == turn
-            num18 = data["tables"]["row-1-col-3"] == turn && data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-3"] == turn
-            num19 = data["tables"]["row-1-col-4"] == turn && data["tables"]["row-2-col-4"] == turn && data["tables"]["row-3-col-4"] == turn
-            num20 = data["tables"]["row-1-col-5"] == turn && data["tables"]["row-2-col-5"] == turn && data["tables"]["row-3-col-5"] == turn
-            num21 = data["tables"]["row-2-col-1"] == turn && data["tables"]["row-3-col-1"] == turn && data["tables"]["row-4-col-1"] == turn
-            num22 = data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-2"] == turn && data["tables"]["row-4-col-2"] == turn
-            num23 = data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-3"] == turn
-            num24 = data["tables"]["row-2-col-4"] == turn && data["tables"]["row-3-col-4"] == turn && data["tables"]["row-4-col-4"] == turn
-            num25 = data["tables"]["row-2-col-5"] == turn && data["tables"]["row-3-col-5"] == turn && data["tables"]["row-4-col-5"] == turn
-            num26 = data["tables"]["row-3-col-1"] == turn && data["tables"]["row-4-col-1"] == turn && data["tables"]["row-5-col-1"] == turn
-            num27 = data["tables"]["row-3-col-2"] == turn && data["tables"]["row-4-col-2"] == turn && data["tables"]["row-5-col-2"] == turn
-            num28 = data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-3"] == turn && data["tables"]["row-5-col-3"] == turn
-            num29 = data["tables"]["row-3-col-4"] == turn && data["tables"]["row-4-col-4"] == turn && data["tables"]["row-5-col-4"] == turn
-            num30 = data["tables"]["row-3-col-5"] == turn && data["tables"]["row-4-col-5"] == turn && data["tables"]["row-5-col-5"] == turn
-            //เฉียง
-            num31 = data["tables"]["row-1-col-1"] == turn && data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-3"] == turn
-            num32 = data["tables"]["row-1-col-2"] == turn && data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-4"] == turn
-            num33 = data["tables"]["row-1-col-3"] == turn && data["tables"]["row-2-col-4"] == turn && data["tables"]["row-3-col-5"] == turn
-            num34 = data["tables"]["row-1-col-3"] == turn && data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-1"] == turn
-            num35 = data["tables"]["row-1-col-4"] == turn && data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-2"] == turn
-            num36 = data["tables"]["row-1-col-5"] == turn && data["tables"]["row-2-col-4"] == turn && data["tables"]["row-3-col-3"] == turn
-
-            num37 = data["tables"]["row-2-col-1"] == turn && data["tables"]["row-3-col-2"] == turn && data["tables"]["row-4-col-3"] == turn
-            num38 = data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-4"] == turn
-            num39 = data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-4"] == turn && data["tables"]["row-4-col-5"] == turn
-            num40 = data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-2"] == turn && data["tables"]["row-4-col-1"] == turn
-            num41 = data["tables"]["row-2-col-4"] == turn && data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-2"] == turn
-            num42 = data["tables"]["row-2-col-5"] == turn && data["tables"]["row-3-col-4"] == turn && data["tables"]["row-4-col-3"] == turn
-
-            num43 = data["tables"]["row-3-col-1"] == turn && data["tables"]["row-4-col-2"] == turn && data["tables"]["row-5-col-3"] == turn
-            num44 = data["tables"]["row-3-col-2"] == turn && data["tables"]["row-4-col-3"] == turn && data["tables"]["row-5-col-4"] == turn
-            num45 = data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-4"] == turn && data["tables"]["row-5-col-5"] == turn
-            num46 = data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-2"] == turn && data["tables"]["row-5-col-1"] == turn
-            num47 = data["tables"]["row-3-col-4"] == turn && data["tables"]["row-4-col-3"] == turn && data["tables"]["row-5-col-2"] == turn
-            num48 = data["tables"]["row-3-col-5"] == turn && data["tables"]["row-4-col-4"] == turn && data["tables"]["row-5-col-3"] == turn
-            
-            if (num1 || num2 || num3 || num4 || num5 || num6 || num7 || num8 || num9 || num10 ||
-                num11 || num12 || num13 || num14 || num15 || num16 || num17 || num18 || num19 || num20 ||
-                num21 || num22 || num23 || num24 || num25 || num26 || num27 || num28 || num29 || num30 ||
-                num31 || num32 || num33 || num34 || num35 || num36 || num37 || num38 || num39 || num40 ||
-                num41 || num42 || num43 || num44 || num45 || num46 || num47 || num48 ) {
-                    ref.child(roomid).update({
-                    status: "finish",
-                    winner: turn
-                })
-                id = data[`user-${turn.toLowerCase()}-id`]
-                console.log(id)
-                console.log('===||==========>')
-                // console.log(user.email)
-                ref_userdata.once('value', snapshot =>{
-                    const usertype = snapshot.val();
-                    Object.keys(usertype).forEach(key=>{
-                        console.log('key = '+key)
-                        if (key == id){
-                            var user_score_4 = snapshot.child(id).child('Score').val() + 1;
-                            ref_userdata.child(id).update({
-                                ['Score']: user_score_4,
-                            });
-                        }
+    setTimeout(function(){
+        ref.child(roomid).once("value", snapshot => {
+            data = snapshot.val()
+            currentUser = firebase.auth().currentUser
+            turns = ["X", "O"]
+    
+            if (data.winner) {
+                return
+            }
+    
+            for (const turn of turns) {
+                num1 = data["tables"]["row-1-col-1"] == turn && data["tables"]["row-1-col-2"] == turn && data["tables"]["row-1-col-3"] == turn
+                num2 = data["tables"]["row-2-col-1"] == turn && data["tables"]["row-2-col-2"] == turn && data["tables"]["row-2-col-3"] == turn
+                num3 = data["tables"]["row-3-col-1"] == turn && data["tables"]["row-3-col-2"] == turn && data["tables"]["row-3-col-3"] == turn
+                num4 = data["tables"]["row-4-col-1"] == turn && data["tables"]["row-4-col-2"] == turn && data["tables"]["row-4-col-3"] == turn
+                num5 = data["tables"]["row-5-col-1"] == turn && data["tables"]["row-5-col-2"] == turn && data["tables"]["row-5-col-3"] == turn
+                num6 = data["tables"]["row-1-col-2"] == turn && data["tables"]["row-1-col-3"] == turn && data["tables"]["row-1-col-4"] == turn
+                num7 = data["tables"]["row-2-col-2"] == turn && data["tables"]["row-2-col-3"] == turn && data["tables"]["row-2-col-4"] == turn
+                num8 = data["tables"]["row-3-col-2"] == turn && data["tables"]["row-3-col-3"] == turn && data["tables"]["row-3-col-4"] == turn
+                num9 = data["tables"]["row-4-col-2"] == turn && data["tables"]["row-4-col-3"] == turn && data["tables"]["row-4-col-4"] == turn
+                num10 = data["tables"]["row-5-col-2"] == turn && data["tables"]["row-5-col-3"] == turn && data["tables"]["row-5-col-4"] == turn
+                num11 = data["tables"]["row-1-col-3"] == turn && data["tables"]["row-1-col-4"] == turn && data["tables"]["row-1-col-5"] == turn
+                num12 = data["tables"]["row-2-col-3"] == turn && data["tables"]["row-2-col-4"] == turn && data["tables"]["row-2-col-5"] == turn
+                num13 = data["tables"]["row-3-col-3"] == turn && data["tables"]["row-3-col-4"] == turn && data["tables"]["row-3-col-5"] == turn
+                num14 = data["tables"]["row-4-col-3"] == turn && data["tables"]["row-4-col-4"] == turn && data["tables"]["row-4-col-5"] == turn
+                num15 = data["tables"]["row-5-col-3"] == turn && data["tables"]["row-5-col-4"] == turn && data["tables"]["row-5-col-5"] == turn
+                //ตั้ง
+                num16 = data["tables"]["row-1-col-1"] == turn && data["tables"]["row-2-col-1"] == turn && data["tables"]["row-3-col-1"] == turn
+                num17 = data["tables"]["row-1-col-2"] == turn && data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-2"] == turn
+                num18 = data["tables"]["row-1-col-3"] == turn && data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-3"] == turn
+                num19 = data["tables"]["row-1-col-4"] == turn && data["tables"]["row-2-col-4"] == turn && data["tables"]["row-3-col-4"] == turn
+                num20 = data["tables"]["row-1-col-5"] == turn && data["tables"]["row-2-col-5"] == turn && data["tables"]["row-3-col-5"] == turn
+                num21 = data["tables"]["row-2-col-1"] == turn && data["tables"]["row-3-col-1"] == turn && data["tables"]["row-4-col-1"] == turn
+                num22 = data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-2"] == turn && data["tables"]["row-4-col-2"] == turn
+                num23 = data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-3"] == turn
+                num24 = data["tables"]["row-2-col-4"] == turn && data["tables"]["row-3-col-4"] == turn && data["tables"]["row-4-col-4"] == turn
+                num25 = data["tables"]["row-2-col-5"] == turn && data["tables"]["row-3-col-5"] == turn && data["tables"]["row-4-col-5"] == turn
+                num26 = data["tables"]["row-3-col-1"] == turn && data["tables"]["row-4-col-1"] == turn && data["tables"]["row-5-col-1"] == turn
+                num27 = data["tables"]["row-3-col-2"] == turn && data["tables"]["row-4-col-2"] == turn && data["tables"]["row-5-col-2"] == turn
+                num28 = data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-3"] == turn && data["tables"]["row-5-col-3"] == turn
+                num29 = data["tables"]["row-3-col-4"] == turn && data["tables"]["row-4-col-4"] == turn && data["tables"]["row-5-col-4"] == turn
+                num30 = data["tables"]["row-3-col-5"] == turn && data["tables"]["row-4-col-5"] == turn && data["tables"]["row-5-col-5"] == turn
+                //เฉียง
+                num31 = data["tables"]["row-1-col-1"] == turn && data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-3"] == turn
+                num32 = data["tables"]["row-1-col-2"] == turn && data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-4"] == turn
+                num33 = data["tables"]["row-1-col-3"] == turn && data["tables"]["row-2-col-4"] == turn && data["tables"]["row-3-col-5"] == turn
+                num34 = data["tables"]["row-1-col-3"] == turn && data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-1"] == turn
+                num35 = data["tables"]["row-1-col-4"] == turn && data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-2"] == turn
+                num36 = data["tables"]["row-1-col-5"] == turn && data["tables"]["row-2-col-4"] == turn && data["tables"]["row-3-col-3"] == turn
+    
+                num37 = data["tables"]["row-2-col-1"] == turn && data["tables"]["row-3-col-2"] == turn && data["tables"]["row-4-col-3"] == turn
+                num38 = data["tables"]["row-2-col-2"] == turn && data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-4"] == turn
+                num39 = data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-4"] == turn && data["tables"]["row-4-col-5"] == turn
+                num40 = data["tables"]["row-2-col-3"] == turn && data["tables"]["row-3-col-2"] == turn && data["tables"]["row-4-col-1"] == turn
+                num41 = data["tables"]["row-2-col-4"] == turn && data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-2"] == turn
+                num42 = data["tables"]["row-2-col-5"] == turn && data["tables"]["row-3-col-4"] == turn && data["tables"]["row-4-col-3"] == turn
+    
+                num43 = data["tables"]["row-3-col-1"] == turn && data["tables"]["row-4-col-2"] == turn && data["tables"]["row-5-col-3"] == turn
+                num44 = data["tables"]["row-3-col-2"] == turn && data["tables"]["row-4-col-3"] == turn && data["tables"]["row-5-col-4"] == turn
+                num45 = data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-4"] == turn && data["tables"]["row-5-col-5"] == turn
+                num46 = data["tables"]["row-3-col-3"] == turn && data["tables"]["row-4-col-2"] == turn && data["tables"]["row-5-col-1"] == turn
+                num47 = data["tables"]["row-3-col-4"] == turn && data["tables"]["row-4-col-3"] == turn && data["tables"]["row-5-col-2"] == turn
+                num48 = data["tables"]["row-3-col-5"] == turn && data["tables"]["row-4-col-4"] == turn && data["tables"]["row-5-col-3"] == turn
+                
+                if (num1 || num2 || num3 || num4 || num5 || num6 || num7 || num8 || num9 || num10 ||
+                    num11 || num12 || num13 || num14 || num15 || num16 || num17 || num18 || num19 || num20 ||
+                    num21 || num22 || num23 || num24 || num25 || num26 || num27 || num28 || num29 || num30 ||
+                    num31 || num32 || num33 || num34 || num35 || num36 || num37 || num38 || num39 || num40 ||
+                    num41 || num42 || num43 || num44 || num45 || num46 || num47 || num48 ) {
+                        ref.child(roomid).update({
+                        status: "finish",
+                        winner: turn
                     })
-                })
-                changeyellow()
-                    // ref_userdata.once('value', userData => {
-                    //     var user_score_4 = userData.child(user.uid).child('Score').val() + 1;
-                    //     ref_userdata.child(user.uid).update({
-                    //         ['Score']: user_score_4,
-                    //     });
-                    //     document.querySelector('#user-profile-name').innerHTML = user.displayName + " Score : " +  user_score_4 ;
-                    // });
-                
-                
-               
+                    id = data[`user-${turn.toLowerCase()}-id`]
+                    console.log(id)
+                    console.log('===||==========>')
+                    // console.log(user.email)
+                    ref_userdata.once('value', snapshot =>{
+                        const usertype = snapshot.val();
+                        Object.keys(usertype).forEach(key=>{
+                            console.log('key = '+key)
+                            if (key == id){
+                                var user_score_4 = snapshot.child(id).child('Score').val() + 1;
+                                ref_userdata.child(id).update({
+                                    ['Score']: user_score_4,
+                                });
+                            }
+                        })
+                    })
+                    changeyellow()
+                        // ref_userdata.once('value', userData => {
+                        //     var user_score_4 = userData.child(user.uid).child('Score').val() + 1;
+                        //     ref_userdata.child(user.uid).update({
+                        //         ['Score']: user_score_4,
+                        //     });
+                        //     document.querySelector('#user-profile-name').innerHTML = user.displayName + " Score : " +  user_score_4 ;
+                        // });
+                    
+                    
+                   
+                }
+                if (data["tables"]["row-1-col-1"] && data["tables"]["row-1-col-2"] && data["tables"]["row-1-col-3"] && data["tables"]["row-1-col-4"] && data["tables"]["row-1-col-5"] &&
+                data["tables"]["row-2-col-1"] && data["tables"]["row-2-col-2"] && data["tables"]["row-2-col-3"] && data["tables"]["row-2-col-4"] && data["tables"]["row-2-col-5"] &&
+                data["tables"]["row-3-col-1"] && data["tables"]["row-3-col-2"] && data["tables"]["row-3-col-3"] && data["tables"]["row-3-col-4"] && data["tables"]["row-3-col-5"] &&
+                data["tables"]["row-4-col-1"] && data["tables"]["row-4-col-2"] && data["tables"]["row-4-col-3"] && data["tables"]["row-4-col-4"] && data["tables"]["row-4-col-5"] &&
+                data["tables"]["row-5-col-1"] && data["tables"]["row-5-col-2"] && data["tables"]["row-5-col-3"] && data["tables"]["row-5-col-4"] && data["tables"]["row-5-col-5"] ){
+                    console.log('affdraw')
+                    ref.child(roomid).update({
+                        status: "finish",
+                        winner: "draw"
+                    })
+                }
             }
-            if (data["tables"]["row-1-col-1"] && data["tables"]["row-1-col-2"] && data["tables"]["row-1-col-3"] && data["tables"]["row-1-col-4"] && data["tables"]["row-1-col-5"] &&
-            data["tables"]["row-2-col-1"] && data["tables"]["row-2-col-2"] && data["tables"]["row-2-col-3"] && data["tables"]["row-2-col-4"] && data["tables"]["row-2-col-5"] &&
-            data["tables"]["row-3-col-1"] && data["tables"]["row-3-col-2"] && data["tables"]["row-3-col-3"] && data["tables"]["row-3-col-4"] && data["tables"]["row-3-col-5"] &&
-            data["tables"]["row-4-col-1"] && data["tables"]["row-4-col-2"] && data["tables"]["row-4-col-3"] && data["tables"]["row-4-col-4"] && data["tables"]["row-4-col-5"] &&
-            data["tables"]["row-5-col-1"] && data["tables"]["row-5-col-2"] && data["tables"]["row-5-col-3"] && data["tables"]["row-5-col-4"] && data["tables"]["row-5-col-5"] ){
-                console.log('affdraw')
-                ref.child(roomid).update({
-                    status: "finish",
-                    winner: "draw"
-                })
-            }
-        }
-    })
+        })
+
+    }, 1000)
+   
 }
 
 function changeyellow(){
