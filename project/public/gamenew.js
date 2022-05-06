@@ -344,6 +344,7 @@ btnTerminateGame.addEventListener("click", stopgame);
 btngotomenu.addEventListener("click", off());
 
 function startgame(event) {
+    
     if (toggle ==0){
     ref.child(roomid).update({
         status: "start",
@@ -413,6 +414,9 @@ function Game_play(event) {
             ref.child(roomid).update({
                 turn: "O"
             })
+            document.querySelector(".turn-left").disabled  = false;
+            document.querySelector(".turn-right").disabled  = false; 
+            
         }
         else if (data.turn === "O" && data["user-o-email"] === currentUser.email && !data["tables"][id]) {
             ref.child(roomid).child("tables").update({
@@ -420,9 +424,12 @@ function Game_play(event) {
             })
             ref.child(roomid).update({
                 turn: "X"
-            })
+            }) 
+            document.querySelector(".turn-left").disabled  = false;
+            document.querySelector(".turn-right").disabled  = false;
         }
     })
+    
 }
 
 function final() {

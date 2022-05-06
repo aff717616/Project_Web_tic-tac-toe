@@ -10,6 +10,8 @@ function turnLeft() {
     // show.innerText = `left rotateVal= ${rotateVal}`;
     allGravity();
     TableWidthHeightToggle();
+    document.querySelector(".turn-left").disabled = true;
+    document.querySelector(".turn-right").disabled = true;
 }
 
 function turnRight() {
@@ -19,6 +21,8 @@ function turnRight() {
     // show.innerText = `right rotateVal= ${rotateVal}`;
     allGravity();
     TableWidthHeightToggle();
+    document.querySelector(".turn-left").disabled = true;
+    document.querySelector(".turn-right").disabled = true;
 }
 
 function TableWidthHeightToggle() {

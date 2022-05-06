@@ -5,6 +5,7 @@ let menuPage = document.getElementById(`menu-page`);
 let gamepage = document.getElementById(`game-page`);
 let scorepage = document.getElementById(`score-page`);
 let togglescoreboard = 0;
+
 function goToSignUpPage() {
     signInPage.style.display = `none`;
     signUpPage.style.display = `flex`;
@@ -18,7 +19,11 @@ function goToSignInPage() {
     signUpPage.style.display = `none`;
     menuPage.style.display = `none`;
     gamepage.style.display = `none`;
-    scorepage.style.display = `none`;
+    scorepage.style.display = `none`;   
+    if (document.querySelector('#user-profile-name').innerText !=''){
+        goToMenuPage()
+    }
+    
 }
 
 function goToMenuPage() {
